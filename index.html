@@ -1,65 +1,235 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GammeClub — Accueil festif</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GammeClub 🎮</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#101326;--panel:#1b2040;--pink:#ff4f9a;--cyan:#63e6db;--text:#f7f7ff;--muted:#b8bdd8}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#29204b,var(--bg) 60%);color:var(--text);font:16px system-ui,-apple-system,sans-serif;min-height:100vh}.wrap{max-width:1050px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.logo{font-size:clamp(26px,5vw,40px);font-weight:900;letter-spacing:-1px}.logo span{color:var(--pink)}.pill{background:#2b3156;border:1px solid #42496f;border-radius:999px;padding:8px 12px;color:var(--muted);font-size:13px}.hero{margin:24px 0;background:linear-gradient(120deg,#28224d,#202849);border:1px solid #42446c;border-radius:24px;padding:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.hero h1{margin:0 0 6px;font-size:clamp(24px,4vw,34px)}.hero p{margin:0;color:var(--muted)}.stats{display:flex;gap:10px;flex-wrap:wrap}.stat{background:#14182f;padding:12px 16px;border-radius:14px;min-width:95px}.stat small{display:block;color:var(--muted)}.stat strong{font-size:23px}.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.card{background:#1a1f3b;border:1px solid #353c63;border-radius:20px;padding:18px}.card h2{font-size:20px;margin:0 0 14px}.ballrow{display:flex;align-items:center;gap:12px;margin-bottom:15px}.ball{width:65px;height:65px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,var(--pink),#a83cff);font-size:25px;font-weight:900;box-shadow:0 6px 22px #ff4f9a33}.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;background:var(--pink);color:#190e25}.btn.secondary{background:#30385e;color:white;border:1px solid #4b5683}.btn:disabled{opacity:.4;cursor:not-allowed}.bingo{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;max-width:430px}.cell{aspect-ratio:1;border-radius:12px;display:grid;place-items:center;background:#2a3156;border:1px solid #444d7c;font-size:clamp(16px,3vw,22px);font-weight:800;cursor:pointer;user-select:none}.cell.head{background:transparent;border:0;color:var(--cyan);font-size:18px;cursor:default}.cell.marked{background:linear-gradient(145deg,#087e89,#20b8ad);color:#fff;border-color:#6bf3e5}.cell.free{font-size:12px;color:#14182f;background:var(--cyan);cursor:default}.help{color:var(--muted);font-size:13px;line-height:1.5}.history{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.history span{border-radius:50%;width:32px;height:32px;display:grid;place-items:center;background:#30385e;font-size:13px}.ranking{display:grid;gap:9px}.rank{display:flex;justify-content:space-between;gap:10px;background:#242a4c;padding:11px 13px;border-radius:12px}.rank span{color:var(--muted)}.notice{margin-top:16px;padding:12px 14px;background:#143e42;border:1px solid #23676b;border-radius:12px;color:#c8fffa;display:none}.foot{color:#8990b7;text-align:center;font-size:12px;margin:22px 0 8px}@media(max-width:760px){.layout{grid-template-columns:1fr}.hero{padding:17px}.wrap{padding:14px}.card{padding:15px}}
-:root{--bg:#170d35;--panel:#26144d;--pink:#ff5ebc;--cyan:#60f0e2;--text:#fffaff;--muted:#d4c9f3}
-body{background:radial-gradient(ellipse at 10% 0%,#6739a4 0,transparent 38%),radial-gradient(ellipse at 95% 20%,#174d83 0,transparent 32%),linear-gradient(160deg,#170d35,#100d28 72%)}
-.wrap{max-width:1100px}.top{padding:8px 0}.logo{font-size:clamp(30px,5vw,44px);text-shadow:0 3px 0 #4c247e}.logo span{color:#ff83cb}.pill{background:#302056;border-color:#6b4aa0;color:#f1ddff}
-.homehero{margin:22px 0 18px;position:relative;overflow:hidden;border:1px solid #8d5dd4;border-radius:28px;padding:clamp(22px,4vw,38px);background:linear-gradient(115deg,#8b36cb 0%,#5639b5 46%,#247bb5 100%);box-shadow:0 15px 40px #08041c77}
-.homehero:after{content:'✦  ✧  ✨';position:absolute;right:20px;top:15px;font-size:clamp(24px,4vw,42px);color:#ffe7a6;opacity:.9;transform:rotate(8deg)}
-.homehero h1{font-size:clamp(30px,5vw,48px);line-height:1.05;margin:0 0 10px;max-width:650px}.homehero p{font-size:16px;max-width:600px;color:#f5eaff;line-height:1.5;margin:0 0 20px}.homehero .btn{background:#ffe37b;color:#492064;padding:14px 20px;box-shadow:0 5px 0 #c78b39}.homehero .btn.secondary{background:#39205e;color:#fff;border-color:#a77de4;box-shadow:none}
-.home-section-title{font-size:23px;font-weight:900;margin:26px 0 13px}.homegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:22px}.tile{border:1px solid #ffffff30;border-radius:22px;padding:18px 16px;min-height:148px;box-shadow:0 8px 20px #08041c44;position:relative;overflow:hidden}.tile .emoji{font-size:35px;display:block;margin-bottom:10px}.tile strong{font-size:17px;display:block}.tile small{display:block;margin-top:5px;color:#fff0ff;line-height:1.4}.tile.bingoTile{background:linear-gradient(145deg,#f04f9b,#9c3bd0)}.tile.tribuzTile{background:linear-gradient(145deg,#3d9be8,#4050bd)}.tile.giftTile{background:linear-gradient(145deg,#ff9c45,#df4b83)}.tile.voiceTile{background:linear-gradient(145deg,#23b9a6,#246a91)}.tile:after{content:'✦';position:absolute;right:12px;top:8px;font-size:30px;color:#ffffff55}
-.currencyrow{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 24px}.currency{display:flex;align-items:center;gap:8px;background:#241744;border:1px solid #644a8b;border-radius:15px;padding:10px 14px;color:#fff}.currency b{font-size:14px}.currency span{font-size:20px}.hero{background:linear-gradient(120deg,#2c2057,#1c2c52);border-color:#5a4b91}.stat{background:#191332;border:1px solid #49336d}.card{background:linear-gradient(150deg,#241b45,#1a1a39);border-color:#514276;box-shadow:0 8px 24px #07051a44}.card h2{font-size:21px}.ball{background:linear-gradient(145deg,#ff66bd,#9a55ff);box-shadow:0 6px 22px #ff4f9a55}.btn{background:linear-gradient(100deg,#ff73bb,#ffb05e);color:#32103c}.btn.secondary{background:#39305e;border-color:#64548e}.cell.head{color:#ffb8e0}.cell.marked{background:linear-gradient(145deg,#0b9caa,#50dfca)}.rank{background:#302650}.foot{color:#b7a8d8}.sectionnav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.sectionnav a{color:#f9eaff;text-decoration:none;background:#2a1b4c;border:1px solid #63468c;padding:9px 12px;border-radius:999px;font-size:13px;font-weight:700}
-@media(max-width:760px){.homegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{min-height:135px;padding:15px}.homehero{padding:23px}.sectionnav{gap:6px}}
-
-
-/* Accueil festif v2 : inspiration générale, identité propre à GammeClub */
-.profilebar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#1c1239;border:1px solid #6343a0;border-radius:22px;padding:12px 15px;margin-top:14px;box-shadow:0 8px 24px #08041c55}.avatar{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:linear-gradient(135deg,#ff79c6,#775bff);border:2px solid #ffe2ff}.profileinfo{min-width:110px;flex:1}.profileinfo strong{display:block;font-size:17px}.profileinfo small{color:#d7c6ff}.mini-progress{height:6px;width:95px;background:#40305f;border-radius:8px;margin-top:5px;overflow:hidden}.mini-progress i{display:block;width:45%;height:100%;background:linear-gradient(90deg,#ff6ec7,#ffd76d)}.wallet{display:flex;align-items:center;gap:7px;background:#2b1b4b;border:1px solid #6b4a9d;border-radius:999px;padding:9px 12px;font-weight:800;white-space:nowrap}.wallet em{font-style:normal;font-size:20px}.wallet small{color:#d9cbff;font-weight:600}.vip{font-size:25px}.quicklinks{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;margin:15px 0}.quicklink{background:linear-gradient(160deg,#2e2057,#1e1a40);border:1px solid #5b438c;border-radius:16px;padding:12px 5px;text-align:center;font-weight:750;font-size:13px;box-shadow:0 6px 14px #05031444}.quicklink span{display:block;font-size:26px;margin-bottom:5px}.bingo-feature{display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px;margin:14px 0 18px;padding:clamp(18px,3vw,28px);border:2px solid #b65aff;border-radius:26px;background:radial-gradient(circle at 80% 30%,#ffb34d66,transparent 26%),radial-gradient(circle at 15% 80%,#28d6ff66,transparent 28%),linear-gradient(110deg,#e84fa6,#8a37d4 50%,#3158c8);box-shadow:0 10px 28px #05031466;overflow:hidden}.bingo-feature .kicker{font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#ffecad}.bingo-feature h2{font-size:clamp(28px,5vw,43px);line-height:1;margin:7px 0;text-shadow:0 3px 0 #612a99}.bingo-feature p{margin:0;color:#fff2ff;font-size:14px}.bingo-balls{font-size:clamp(24px,5vw,45px);margin:10px 0}.bingo-feature .btn{background:linear-gradient(#fff08a,#ffb632);box-shadow:0 5px 0 #c67b1b;color:#43215c;white-space:nowrap}.featuretiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}.featuretile{min-height:145px;border-radius:22px;padding:17px;border:1px solid #ffffff45;box-shadow:0 8px 20px #08041c55;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}.featuretile .bigemoji{position:absolute;right:12px;top:8px;font-size:48px;filter:drop-shadow(0 5px 6px #10051f66)}.featuretile strong{font-size:19px;position:relative}.featuretile small{color:#fff1ff;position:relative;line-height:1.4;margin-top:5px}.ft-tribuz{background:linear-gradient(145deg,#178fc4,#352f9c)}.ft-voice{background:linear-gradient(145deg,#a22ed1,#ec4e9a)}.ft-war{background:linear-gradient(145deg,#e04d74,#7731ad)}.lowerfeatures{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.lowerfeature{background:linear-gradient(120deg,#321b66,#1d2b61);border:1px solid #674ca2;border-radius:22px;padding:16px;display:flex;gap:12px;align-items:center}.lowerfeature .bigemoji{font-size:43px}.lowerfeature strong{display:block}.lowerfeature small{color:#d9caff;display:block;margin-top:4px}.eventstrip{background:#211742;border:1px solid #513c83;border-radius:20px;padding:14px;margin:14px 0 22px}.eventstrip h3{margin:0 0 10px}.eventitems{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.eventitem{background:#302052;border-radius:14px;padding:11px;font-size:13px}.eventitem b{display:block;margin-bottom:4px}.bottomnav{display:flex;justify-content:space-around;gap:8px;background:#1b1237;border:1px solid #4a347b;border-radius:22px;padding:12px 5px;margin:20px 0}.bottomnav a{color:#d8caff;text-decoration:none;text-align:center;font-size:12px;font-weight:800}.bottomnav span{display:block;font-size:23px;margin-bottom:3px}.bottomnav a:first-child{color:#ff9bd7}
-@media(max-width:700px){.profilebar{gap:8px}.wallet{font-size:12px;padding:8px 10px}.quicklinks{grid-template-columns:repeat(3,minmax(0,1fr))}.bingo-feature{grid-template-columns:1fr}.bingo-feature .btn{width:100%}.featuretiles{grid-template-columns:1fr 1fr}.featuretile{min-height:125px;padding:13px}.featuretile:last-child{grid-column:1/-1}.lowerfeatures{grid-template-columns:1fr}.eventitems{grid-template-columns:1fr}.profileinfo{flex:1 1 100px}}
-
-</style></head><body><main class="wrap">
-<header class="top" id="top"><div class="logo">Gamme<span>Club</span> ✦</div><div class="pill">✨ TON UNIVERS DE JEUX · PROTOTYPE GRATUIT</div></header>
-<div class="profilebar"><div class="avatar">😎</div><div class="profileinfo"><strong>Mon profil ✨</strong><small>Niveau 1 · Explorateur du Club</small><div class="mini-progress"><i></i></div></div><div class="wallet"><em>💎</em> 0 <small>Diamants</small></div><div class="wallet"><em>✨</em> <span id="topCoins">0</span> <small>Éclats</small></div><div class="wallet"><em>🌟</em> <small>Rayonnement</small></div></div>
-<div class="quicklinks"><div class="quicklink"><span>🎁</span>Récompenses</div><div class="quicklink"><span>🎯</span>Défis</div><div class="quicklink"><span>🎀</span>Cadeaux</div><div class="quicklink"><span>👥</span>Amis</div><div class="quicklink"><span>🏆</span>Classement</div><div class="quicklink"><span>🛍️</span>Boutique</div></div>
-<section class="bingo-feature"><div><div class="kicker">Le rendez-vous du Club</div><h2>🎱 BINGO<br>COLLECTIF</h2><div class="bingo-balls">🔵 75　🩷 12　🟢 8</div><p>Jusqu’à 150 joueurs · Plusieurs gagnants · Gagne des Éclats !</p></div><div><button class="btn" id="playNow">Jouer maintenant ▶</button></div></section>
-<div class="featuretiles"><div class="featuretile ft-tribuz"><span class="bigemoji">🛡️</span><strong>Les Tribuz</strong><small>Crée ton équipe et relève des défis</small></div><div class="featuretile ft-voice"><span class="bigemoji">🎙️</span><strong>Salons vocaux</strong><small>Parle, rigole et rencontre</small></div><div class="featuretile ft-war"><span class="bigemoji">⚔️</span><strong>Guerres de Tribuz</strong><small>Défis, revanches et classements</small></div></div>
-<div class="lowerfeatures"><div class="lowerfeature"><span class="bigemoji">💠</span><div><strong>Diamant Mystère</strong><small>Une surprise à découvrir avec 500 Éclats (fonction à venir)</small></div></div><div class="lowerfeature"><span class="bigemoji">🎁</span><div><strong>Cadeaux virtuels</strong><small>Collectionne et augmente ton Rayonnement</small></div></div></div>
-<div class="eventstrip"><h3>🔥 Événements du Club</h3><div class="eventitems"><div class="eventitem"><b>🏆 Tournoi Bingo</b>Entraîne-toi dès maintenant</div><div class="eventitem"><b>🎙️ Soirée vocale</b>Prochainement</div><div class="eventitem"><b>⚔️ Défi des Tribuz</b>À venir</div></div></div>
-<nav class="bottomnav"><a href="#top"><span>🏠</span>Accueil</a><a href="#bingoArea"><span>🎮</span>Jeux</a><a href="#future"><span>🛡️</span>Tribuz</a><a href="#future"><span>💬</span>Discussions</a><a href="#top"><span>👤</span>Profil</a></nav>
-<div class="home-section-title">🎮 Ton univers GammeClub</div>
-<section class="homegrid" id="gameTiles"><div class="tile bingoTile"><span class="emoji">🎱</span><strong>Bingo collectif</strong><small>Joue et gagne des XP et des Éclats</small></div><div class="tile tribuzTile"><span class="emoji">🛡️</span><strong>Les Tribuz</strong><small>Forme ton équipe · bientôt</small></div><div class="tile giftTile"><span class="emoji">🎁</span><strong>Cadeaux animés</strong><small>Envoie des cadeaux et augmente ton Rayonnement</small></div><div class="tile voiceTile"><span class="emoji">🎙️</span><strong>Salons vocaux</strong><small>Retrouve tes amis · bientôt</small></div></section>
-<div class="currencyrow"><div class="currency"><span>💎</span><b>Diamants</b><small>Premium</small></div><div class="currency"><span>✨</span><b>Éclats</b><small>À gagner en jouant</small></div><div class="currency"><span>🌟</span><b>Rayonnement</b><small>Prestige des cadeaux</small></div></div>
-<nav class="sectionnav"><a href="#top">🏠 Accueil</a><a href="#bingoArea">🎮 Jeux</a><a href="#future">🛡️ Tribuz</a><a href="#future">🎙️ Communauté</a></nav>
-<section class="hero"><div><h1>Le bingo, tous ensemble 🎉</h1><p>Joue, gagne de l’XP et progresse dans le classement.</p></div><div class="stats"><div class="stat"><small>Niveau</small><strong id="level">1</strong></div><div class="stat"><small>XP</small><strong id="xp">0</strong></div><div class="stat"><small>Éclats</small><strong id="coins">0</strong></div></div></section>
-<div class="layout" id="bingoArea"><section class="card"><h2>🎱 Tirage du bingo</h2><div class="ballrow"><div class="ball" id="current">—</div><div><strong id="drawStatus">Prêt à jouer ?</strong><div class="help" id="drawCount">0 numéro tiré</div></div></div><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="btn" id="drawBtn">Tirer un numéro</button><button class="btn secondary" id="newBtn">Nouvelle partie</button></div><div class="history" id="history"></div><div class="notice" id="notice"></div><p class="help">Prototype local : les tirages et récompenses sont simulés sur cet appareil. Pas de compte ni d’argent réel.</p></section>
-<section class="card"><h2>🧾 Ma carte</h2><div class="bingo" id="grid"></div><p class="help">Touchez les numéros annoncés pour les marquer. Centre gratuit. Pour ce prototype, une ligne, une colonne ou une diagonale complète valide un bingo.</p><button class="btn secondary" id="claimBtn">Réclamer un bingo</button></section>
-<section class="card"><h2>🏆 Classement de démonstration</h2><div class="ranking"><div class="rank"><strong>🥇 Vous</strong><span id="rankXp">0 XP</span></div><div class="rank"><strong>🥈 TurboLudo</strong><span>250 XP</span></div><div class="rank"><strong>🥉 MimiClub</strong><span>180 XP</span></div></div><p class="help">Les autres joueurs sont fictifs. Le classement réel multi-joueurs nécessitera un serveur.</p></section>
-<section class="card" id="future"><h2>🌟 La suite prévue</h2><div class="ranking"><div class="rank"><strong>👥 Tribuz</strong><span>À venir</span></div><div class="rank"><strong>⚔️ Guerres & revanches</strong><span>À venir</span></div><div class="rank"><strong>💎 Diamants & cadeaux</strong><span>À venir</span></div><div class="rank"><strong>🎙️ Salons vocaux</strong><span>À venir</span></div></div><p class="help">Ces fonctions sont conservées dans le plan du projet, mais ne sont pas encore développées.</p></section></div><div class="foot">GammeClub · Maquette de test — aucune connexion, aucun paiement, aucune donnée envoyée.</div></main>
-
- <div id="connexion" style="background:#26143d;padding:20px;border-radius:16px;margin:20px 0;color:white">
-<h2>🎮 Connexion GammeClub</h2>
-<input id="emailGC" type="email" placeholder="Ton adresse e-mail" style="padding:12px;width:90%;margin:6px 0">
-<input id="passwordGC" type="password" placeholder="Ton mot de passe" style="padding:12px;width:90%;margin:6px 0">
-<button id="inscriptionGC" type="button">Créer mon compte</button>
-<button id="connexionGC" type="button">Me connecter</button>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#160d2b;color:white}
+header{padding:22px 15px;text-align:center;background:linear-gradient(135deg,#7629d9,#e63da8)}
+h1{margin:0;font-size:34px}
+header p{margin-bottom:0}
+main{max-width:850px;margin:auto;padding:16px}
+.panel{background:#281944;border:1px solid #49316c;border-radius:18px;padding:18px;margin:16px 0}
+input{display:block;width:100%;padding:13px;margin:9px 0;border:0;border-radius:10px;font-size:16px}
+button{padding:12px 15px;margin:5px 3px;border:0;border-radius:11px;background:#f34ba8;color:white;font-weight:bold;font-size:15px;cursor:pointer}
+button.secondary{background:#7045d9}
+button:disabled{opacity:.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#382455;padding:13px 5px;text-align:center;border-radius:12px}
+.stat strong{display:block;font-size:20px;color:#ffd76a;margin-top:5px}
+#numbers{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}
+.ball{width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:#f5eaff;color:#29143f;font-weight:bold;font-size:17px}
+#card{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:350px}
+.cell{aspect-ratio:1;background:#fff;color:#24123b;border-radius:9px;display:grid;place-items:center;font-size:18px;font-weight:bold}
+.cell.marked{background:#ffd45b}
+.small{font-size:13px;color:#d5c5ed}
+#messageGC{overflow-wrap:anywhere}
+footer{text-align:center;padding:20px;color:#bba9d8;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<h1>🎮 GammeClub</h1>
+<p>Joue ensemble, gagne des Éclats, brille dans le club !</p>
+</header>
+<main>
+<section class="panel" id="connexion">
+<h2>🔐 Ton compte</h2>
+<p class="small">Connecte-toi ou crée ton compte GammeClub.</p>
+<input id="emailGC" type="email" placeholder="Ton adresse e-mail" autocomplete="email">
+<input id="passwordGC" type="password" placeholder="Ton mot de passe" autocomplete="current-password">
+<button id="inscriptionGC">Créer mon compte</button>
+<button id="connexionGC" class="secondary">Me connecter</button>
+<button id="deconnexionGC" class="secondary" hidden>Me déconnecter</button>
 <p id="messageGC">Bienvenue sur GammeClub !</p>
+</section>
+
+<section class="panel">
+<h2>🌟 Mon profil</h2>
+<div class="stats">
+<div class="stat">✨ Éclats<strong id="eclats">0</strong></div>
+<div class="stat">💎 Diamants<strong id="diamants">0</strong></div>
+<div class="stat">☀️ Rayonnement<strong id="rayonnement">0</strong></div>
 </div>
+<p class="small">Les Éclats sont gagnés dans ce prototype. Les diamants et le Rayonnement sont distincts.</p>
+</section>
+
+<section class="panel">
+<h2>🎱 Bingo GammeClub</h2>
+<p id="gameStatus">Appuie sur « Nouvelle partie » pour commencer.</p>
+<div id="card"></div>
+<div id="numbers"></div>
+<button id="newGame">Nouvelle partie</button>
+<button id="drawNumber" class="secondary" disabled>Tirer un numéro</button>
+<p id="bingoMessage"></p>
+</section>
+</main>
+<footer>GammeClub · Prototype en cours de création</footer>
+
 <script>
-document.getElementById('inscriptionGC').onclick = async () => {
-Envoyé
-Rédiger
-Écrire à
+(() => {
+const SUPABASE_URL = 'https://ngklurznqhlbuvkwkykk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Kohd9SkDvFXUsgFPmWQlPw_vM3VPCY9'
+const $ = id => document.getElementById(id);
+let client = null;
+let session = null;
+let cardNumbers = [];
+let drawn = [];
+let eclats = 0;
+let gameOver = false;
 
+function message(text) {
+  $('messageGC').textContent = text;
+}
 
- 
-  const $=id=>document.getElementById(id);let numbers=[],drawn=[],marked=new Set(),xp=0,coins=0,wins=0,finished=false;const letters=['B','I','N','G','O'];
-function makeCard(){const cols=[[],[],[],[],[]];for(let c=0;c<5;c++){let pool=Array.from({length:15},(_,i)=>i+1+c*15).sort(()=>Math.random()-.5);cols[c]=pool.slice(0,5)}let html='';letters.forEach(l=>html+=`<div class="cell head">${l}</div>`);for(let r=0;r<5;r++)for(let c=0;c<5;c++){let free=r===2&&c===2;let v=free?'FREE':cols[c][r];html+=`<div class="cell ${free?'free':''}" data-v="${v}" ${free?'':'role="button" tabindex="0"'}>${v}</div>`} $('grid').innerHTML=html;marked=new Set(['FREE']);document.querySelectorAll('.cell:not(.head):not(.free)').forEach(el=>{el.onclick=()=>{let n=+el.dataset.v;if(drawn.includes(n)){if(marked.has(n)){marked.delete(n);el.classList.remove('marked')}else{marked.add(n);el.classList.add('marked')}}};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click()}}});document.querySelector('.free').classList.add('marked')}
-function reset(){numbers=Array.from({length:75},(_,i)=>i+1);drawn=[];xp=0;coins=0;wins=0;finished=false;$('current').textContent='—';$('drawStatus').textContent='Prêt à jouer ?';$('history').innerHTML='';$('notice').style.display='none';$('drawBtn').disabled=false;update();makeCard()}
-function update(){$('xp').textContent=xp;$('coins').textContent=coins;$('topCoins').textContent=coins;$('rankXp').textContent=xp+' XP';$('level').textContent=1+Math.floor(xp/100);$('drawCount').textContent=drawn.length+' numéro'+(drawn.length>1?'s':'')+' tiré'+(drawn.length>1?'s':'')}
-function draw(){if(!numbers.length||finished)return;let i=Math.floor(Math.random()*numbers.length),n=numbers.splice(i,1)[0];drawn.push(n);$('current').textContent=n;$('drawStatus').textContent=letters[Math.floor((n-1)/15)]+' — numéro annoncé';$('history').innerHTML=drawn.slice(-15).reverse().map(x=>`<span>${x}</span>`).join('');update();if(!numbers.length){$('drawBtn').disabled=true;$('drawStatus').textContent='Tous les numéros ont été tirés'}}
-function hasBingo(){const m=(r,c)=>marked.has(document.querySelectorAll('.cell:not(.head)')[r*5+c].dataset.v);for(let r=0;r<5;r++)if([0,1,2,3,4].every(c=>m(r,c)))return true;for(let c=0;c<5;c++)if([0,1,2,3,4].every(r=>m(r,c)))return true;if([0,1,2,3,4].every(i=>m(i,i))||[0,1,2,3,4].every(i=>m(i,4-i)))return true;return false}
-$('playNow').onclick=()=>$('bingoArea').scrollIntoView({behavior:'smooth'});$('exploreGames').onclick=()=>$('gameTiles').scrollIntoView({behavior:'smooth'});$('drawBtn').onclick=draw;$('newBtn').onclick=reset;$('claimBtn').onclick=()=>{let notice=$('notice');notice.style.display='block';if(finished){notice.textContent='Cette partie est déjà terminée. Lancez une nouvelle partie.';return}if(!hasBingo()){notice.textContent='Pas encore de bingo : vérifiez vos numéros marqués.';return}finished=true;xp+=50;coins+=30;wins++;notice.textContent='🎉 Bingo validé dans cette simulation ! +50 XP et +30 Éclats.';$('drawBtn').disabled=true;update()};reset();
-</script></body></html>
+function updateStats() {
+  $('eclats').textContent = eclats;
+}
+
+function setupSupabase() {
+  if (!window.supabase) {
+    message('Impossible de charger le service de connexion. Vérifie Internet.');
+    return;
+  }
+  if (SUPABASE_KEY === 'REMPLACE_PAR_TA_CLE_PUBLIABLE_SUPABASE') {
+    message('Ajoute ta clé publique Supabase dans le code pour activer les comptes.');
+    return;
+  }
+  try {
+    client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    client.auth.onAuthStateChange((_event, newSession) => {
+      session = newSession;
+      $('deconnexionGC').hidden = !session;
+      message(session ? 'Connecté : ' + session.user.email : 'Tu n’es pas connecté.');
+    });
+    client.auth.getSession().then(({data, error}) => {
+      if (error) message(error.message);
+      session = data.session;
+      $('deconnexionGC').hidden = !session;
+      if (session) message('Connecté : ' + session.user.email);
+    }).catch(() => message('Impossible de vérifier la connexion.'));
+  } catch (error) {
+    message('Erreur de configuration Supabase.');
+  }
+}
+
+$('inscriptionGC').addEventListener('click', async () => {
+  if (!client) return message('La connexion Supabase doit être configurée.');
+  const email = $('emailGC').value.trim();
+  const password = $('passwordGC').value;
+  if (!email || password.length < 6) {
+    return message('Entre un e-mail valide et un mot de passe de 6 caractères minimum.');
+  }
+  $('inscriptionGC').disabled = true;
+  message('Création du compte en cours…');
+  try {
+    const {error} = await client.auth.signUp({email, password});
+    message(error ? error.message : 'Inscription envoyée ! Vérifie tes e-mails si une confirmation est demandée.');
+  } catch (error) {
+    message('Erreur réseau. Réessaie dans un instant.');
+  } finally {
+    $('inscriptionGC').disabled = false;
+  }
+});
+
+$('connexionGC').addEventListener('click', async () => {
+  if (!client) return message('La connexion Supabase doit être configurée.');
+  const email = $('emailGC').value.trim();
+  const password = $('passwordGC').value;
+  if (!email || !password) return message('Entre ton e-mail et ton mot de passe.');
+  $('connexionGC').disabled = true;
+  message('Connexion en cours…');
+  try {
+    const {error} = await client.auth.signInWithPassword({email, password});
+    message(error ? error.message : 'Connexion réussie !');
+  } catch (error) {
+    message('Erreur réseau. Réessaie dans un instant.');
+  } finally {
+    $('connexionGC').disabled = false;
+  }
+});
+
+$('deconnexionGC').addEventListener('click', async () => {
+  if (!client) return;
+  const {error} = await client.auth.signOut();
+  message(error ? error.message : 'Tu es déconnecté.');
+});
+
+function renderCard() {
+  $('card').replaceChildren();
+  cardNumbers.forEach(number => {
+    const cell = document.createElement('div');
+    cell.className = 'cell' + (drawn.includes(number) ? ' marked' : '');
+    cell.textContent = number;
+    $('card').appendChild(cell);
+  });
+}
+
+function newGame() {
+  const pool = Array.from({length:75}, (_,i) => i + 1);
+  cardNumbers = [];
+  drawn = [];
+  gameOver = false;
+  while (cardNumbers.length < 25) {
+    const index = Math.floor(Math.random() * pool.length);
+    cardNumbers.push(pool.splice(index,1)[0]);
+  }
+  $('numbers').replaceChildren();
+  $('bingoMessage').textContent = '';
+  $('gameStatus').textContent = 'Partie en cours : retrouve les numéros de ta grille !';
+  $('drawNumber').disabled = false;
+  renderCard();
+}
+
+function hasLine() {
+  for (let r=0; r<5; r++) {
+    if (cardNumbers.slice(r*5,r*5+5).every(n => drawn.includes(n))) return true;
+  }
+  for (let c=0; c<5; c++) {
+    if ([0,1,2,3,4].every(r => drawn.includes(cardNumbers[r*5+c]))) return true;
+  }
+  if ([0,6,12,18,24].every(i => drawn.includes(cardNumbers[i]))) return true;
+  if ([4,8,12,16,20].every(i => drawn.includes(cardNumbers[i]))) return true;
+  return false;
+}
+
+function drawNumber() {
+  if (gameOver) return;
+  const remaining = Array.from({length:75},(_,i)=>i+1).filter(n=>!drawn.includes(n));
+  if (!remaining.length) {
+    $('gameStatus').textContent = 'Tous les numéros ont été tirés.';
+    $('drawNumber').disabled = true;
+    return;
+  }
+  const number = remaining[Math.floor(Math.random()*remaining.length)];
+  drawn.push(number);
+  const ball = document.createElement('div');
+  ball.className = 'ball';
+  ball.textContent = number;
+  $('numbers').prepend(ball);
+  renderCard();
+
+  if (hasLine()) {
+    gameOver = true;
+    eclats += 10;
+    updateStats();
+    $('bingoMessage').textContent = '🎉 Bingo ! Tu gagnes 10 Éclats dans cette démonstration.';
+    $('gameStatus').textContent = 'Bravo ! Lance une nouvelle partie.';
+    $('drawNumber').disabled = true;
+  } else if (drawn.length >= 75) {
+    $('gameStatus').textContent = 'Fin de la partie. Essaie encore !';
+    $('drawNumber').disabled = true;
+  }
+}
+
+$('newGame').addEventListener('click', newGame);
+$('drawNumber').addEventListener('click', drawNumber);
+setupSupabase();
+})();
+</script>
+</body>
+</html>
+En
