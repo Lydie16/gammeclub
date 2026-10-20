@@ -38,8 +38,43 @@ body{background:radial-gradient(ellipse at 10% 0%,#6739a4 0,transparent 38%),rad
 <section class="card"><h2>🧾 Ma carte</h2><div class="bingo" id="grid"></div><p class="help">Touchez les numéros annoncés pour les marquer. Centre gratuit. Pour ce prototype, une ligne, une colonne ou une diagonale complète valide un bingo.</p><button class="btn secondary" id="claimBtn">Réclamer un bingo</button></section>
 <section class="card"><h2>🏆 Classement de démonstration</h2><div class="ranking"><div class="rank"><strong>🥇 Vous</strong><span id="rankXp">0 XP</span></div><div class="rank"><strong>🥈 TurboLudo</strong><span>250 XP</span></div><div class="rank"><strong>🥉 MimiClub</strong><span>180 XP</span></div></div><p class="help">Les autres joueurs sont fictifs. Le classement réel multi-joueurs nécessitera un serveur.</p></section>
 <section class="card" id="future"><h2>🌟 La suite prévue</h2><div class="ranking"><div class="rank"><strong>👥 Tribuz</strong><span>À venir</span></div><div class="rank"><strong>⚔️ Guerres & revanches</strong><span>À venir</span></div><div class="rank"><strong>💎 Diamants & cadeaux</strong><span>À venir</span></div><div class="rank"><strong>🎙️ Salons vocaux</strong><span>À venir</span></div></div><p class="help">Ces fonctions sont conservées dans le plan du projet, mais ne sont pas encore développées.</p></section></div><div class="foot">GammeClub · Maquette de test — aucune connexion, aucun paiement, aucune donnée envoyée.</div></main>
+
+ <div id="connexion" style="background:#26143d;padding:20px;border-radius:16px;margin:20px 0;color:white">
+<h2>🎮 Connexion GammeClub</h2>
+<input id="emailGC" type="email" placeholder="Ton adresse e-mail" style="padding:12px;width:90%;margin:6px 0">
+<input id="passwordGC" type="password" placeholder="Ton mot de passe" style="padding:12px;width:90%;margin:6px 0">
+<button id="inscriptionGC" type="button">Créer mon compte</button>
+<button id="connexionGC" type="button">Me connecter</button>
+<p id="messageGC">Bienvenue sur GammeClub !</p>
+</div>
 <script>
-const $=id=>document.getElementById(id);let numbers=[],drawn=[],marked=new Set(),xp=0,coins=0,wins=0,finished=false;const letters=['B','I','N','G','O'];
+ const sb = window.supabase.createClient(
+  'https://ngklurznqhlbuvkwkykk.supabase.co',
+  sb_publishable_Kohd9SkDvFXUsgFPmWQlPw_vM3VPCY9'
+);
+
+document.getElementById('inscriptionGC').onclick = async () => {
+  const email = document.getElementById('emailGC').value;
+  const password = document.getElementById('passwordGC').value;
+  const { error } = await sb.auth.signUp({ email, password });
+  document.getElementById('messageGC').textContent =
+    error ? error.message : 'Inscription envoyée ! Vérifie tes e-mails.';
+};
+
+document.getElementById('connexionGC').onclick = async () => {
+  const email = document.getElementById('emailGC').value;
+  const password = document.getElementById('passwordGC').value;
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  document.getElementById('messageGC').textContent =
+    error ? error.message : 'Connexion réussie !';
+};
+Envoyé
+Rédiger
+Écrire à
+
+
+ 
+  const $=id=>document.getElementById(id);let numbers=[],drawn=[],marked=new Set(),xp=0,coins=0,wins=0,finished=false;const letters=['B','I','N','G','O'];
 function makeCard(){const cols=[[],[],[],[],[]];for(let c=0;c<5;c++){let pool=Array.from({length:15},(_,i)=>i+1+c*15).sort(()=>Math.random()-.5);cols[c]=pool.slice(0,5)}let html='';letters.forEach(l=>html+=`<div class="cell head">${l}</div>`);for(let r=0;r<5;r++)for(let c=0;c<5;c++){let free=r===2&&c===2;let v=free?'FREE':cols[c][r];html+=`<div class="cell ${free?'free':''}" data-v="${v}" ${free?'':'role="button" tabindex="0"'}>${v}</div>`} $('grid').innerHTML=html;marked=new Set(['FREE']);document.querySelectorAll('.cell:not(.head):not(.free)').forEach(el=>{el.onclick=()=>{let n=+el.dataset.v;if(drawn.includes(n)){if(marked.has(n)){marked.delete(n);el.classList.remove('marked')}else{marked.add(n);el.classList.add('marked')}}};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click()}}});document.querySelector('.free').classList.add('marked')}
 function reset(){numbers=Array.from({length:75},(_,i)=>i+1);drawn=[];xp=0;coins=0;wins=0;finished=false;$('current').textContent='—';$('drawStatus').textContent='Prêt à jouer ?';$('history').innerHTML='';$('notice').style.display='none';$('drawBtn').disabled=false;update();makeCard()}
 function update(){$('xp').textContent=xp;$('coins').textContent=coins;$('topCoins').textContent=coins;$('rankXp').textContent=xp+' XP';$('level').textContent=1+Math.floor(xp/100);$('drawCount').textContent=drawn.length+' numéro'+(drawn.length>1?'s':'')+' tiré'+(drawn.length>1?'s':'')}
