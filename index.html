@@ -48,26 +48,7 @@ body{background:radial-gradient(ellipse at 10% 0%,#6739a4 0,transparent 38%),rad
 <p id="messageGC">Bienvenue sur GammeClub !</p>
 </div>
 <script>
- const sb = window.supabase.createClient(
-  'https://ngklurznqhlbuvkwkykk.supabase.co',
-  'sb_publishable_Kohd9SkDvFXUsgFPmWQlPw_vM3VPCY9'
-);
-
 document.getElementById('inscriptionGC').onclick = async () => {
-  const email = document.getElementById('emailGC').value;
-  const password = document.getElementById('passwordGC').value;
-  const { error } = await sb.auth.signUp({ email, password });
-  document.getElementById('messageGC').textContent =
-    error ? error.message : 'Inscription envoyée ! Vérifie tes e-mails.';
-};
-
-document.getElementById('connexionGC').onclick = async () => {
-  const email = document.getElementById('emailGC').value;
-  const password = document.getElementById('passwordGC').value;
-  const { error } = await sb.auth.signInWithPassword({ email, password });
-  document.getElementById('messageGC').textContent =
-    error ? error.message : 'Connexion réussie !';
-};
 Envoyé
 Rédiger
 Écrire à
