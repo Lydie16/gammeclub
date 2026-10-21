@@ -131,5 +131,123 @@ document.getElementById("gcLeaveVoice").onclick = async () => {
   document.getElementById("gcVoiceStatus").textContent = "Tu as quitté le salon.";
 };
 </script>
+<style>
+#gc-bottom-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9998;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 2px calc(10px + env(safe-area-inset-bottom));
+  background: #190d2d;
+  border-top: 1px solid #7545a8;
+  box-shadow: 0 -4px 20px #0005;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+#gc-bottom-menu button {
+  background: transparent;
+  color: white;
+  border: 0;
+  border-radius: 12px;
+  padding: 7px 3px;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  cursor: pointer;
+}
+#gc-bottom-menu button span {
+  font-size: 21px;
+}
+#gc-bottom-menu button.active {
+  color: #d5a5ff;
+  background: #392052;
+}
+body {
+  padding-bottom: 85px !important;
+}
+</style>
+
+<nav id="gc-bottom-menu">
+  <button class="active" data-gc="Accueil">
+    <span>🏠</span>Accueil
+  </button>
+  <button data-gc="Salles vocales">
+    <span>🎙️</span>Salles
+  </button>
+  <button data-gc="Jeux entre amis">
+    <span>🎮</span>Jeux
+  </button>
+  <button data-gc="Messages">
+    <span>💬</span>Messages
+  </button>
+  <button data-gc="Mon compte">
+    <span>👤</span>Profil
+  </button>
+</nav>
+
+<script>
+(function () {
+  const menu = document.getElementById("gc-bottom-menu");
+
+  menu.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+      const destination = button.dataset.gc;
+
+      menu.querySelectorAll("button").forEach(item => {
+        item.classList.toggle("active", item === button);
+      });
+
+      const elements = [...document.querySelectorAll(
+        "button, a, [role='tab'], h1, h2, h3"
+      )];
+
+      const target = elements.find(element =>
+        element.id !== "gc-bottom-menu" &&
+        element.textContent.trim().toLowerCase() ===
+        destination.toLowerCase()
+      );
+
+      if (target) {
+        if (target.matches("button, a, [role='tab']")) {
+          target.click();
+        } else {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        const alternatives = {
+          "Accueil": ["Accueil", "GammeClub"],
+          "Salles vocales": ["Salles vocales", "Les salles vocales"],
+          "Jeux entre amis": ["Jeux entre amis", "Jeux"],
+          "Messages": ["Messages", "Messagerie"],
+          "Mon compte": ["Mon compte", "Profil"]
+        };
+
+        const words = alternatives[destination] || [];
+        const fallback = elements.find(element =>
+          words.some(word =>
+            element.textContent.trim().toLowerCase() ===
+            word.toLowerCase()
+          )
+        );
+
+        if (fallback) {
+          if (fallback.matches("button, a, [role='tab']")) {
+            fallback.click();
+          } else {
+            fallback.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>
