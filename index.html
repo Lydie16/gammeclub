@@ -7,140 +7,195 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#160d2b;color:white}
-header{padding:22px 15px;text-align:center;background:linear-gradient(135deg,#7629d9,#e63da8)}
-h1{margin:0;font-size:34px}
-header p{margin-bottom:0}
-main{max-width:850px;margin:auto;padding:16px}
-.panel{background:#281944;border:1px solid #49316c;border-radius:18px;padding:18px;margin:16px 0}
-input{display:block;width:100%;padding:13px;margin:9px 0;border:0;border-radius:10px;font-size:16px}
-button{padding:12px 15px;margin:5px 3px;border:0;border-radius:11px;background:#f34ba8;color:white;font-weight:bold;font-size:15px;cursor:pointer}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:Arial,sans-serif;color:#fff;
+  background:linear-gradient(145deg,#160d2b,#302052,#160d2b);
+  min-height:100vh;padding-bottom:25px
+}
+header{
+  text-align:center;padding:35px 18px 30px;
+  background:linear-gradient(135deg,#7629d9,#e63da8,#6550e8);
+  border-radius:0 0 30px 30px;
+  box-shadow:0 10px 35px #0004
+}
+.logo{font-size:43px;margin-bottom:8px}
+header h1{font-size:36px;margin:0;font-weight:900}
+header p{margin:12px 0 0;line-height:1.6}
+main{max-width:900px;margin:0 auto;padding:16px}
+.panel{
+  background:linear-gradient(145deg,#30204c,#241638);
+  border:1px solid #65468a;border-radius:22px;
+  padding:20px;margin:18px 0;
+  box-shadow:0 8px 24px #0003
+}
+.welcome{
+  text-align:center;padding:28px 20px;
+  background:linear-gradient(135deg,#4b2180,#782e9c,#a52d83)
+}
+.welcome h2{font-size:27px;margin:0 0 12px;color:#fff}
+.welcome p{line-height:1.7}
+h2{color:#f6a8e1;margin-top:0}
+h3{margin:10px 0;color:#fff}
+.small{font-size:13px;color:#d5c5ed;line-height:1.6}
+.grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px
+}
+.activity{
+  display:block;text-decoration:none;color:white;
+  background:linear-gradient(145deg,#463064,#302044);
+  border:1px solid #745098;border-radius:19px;
+  padding:19px 14px;min-height:140px;
+  transition:transform .2s,border-color .2s
+}
+.activity:hover{transform:translateY(-3px);border-color:#f5a4e1}
+.activity .emoji{font-size:32px}
+.activity p{font-size:13px;line-height:1.5;color:#d9c9ed;margin-bottom:0}
+.tag{
+  display:inline-block;background:#ffffff18;
+  border:1px solid #ffffff30;border-radius:20px;
+  padding:5px 9px;font-size:11px;margin-top:10px
+}
+input{
+  display:block;width:100%;padding:13px;margin:10px 0;
+  border:1px solid #8464a7;border-radius:11px;
+  background:#fff;color:#24123b;font-size:16px
+}
+button{
+  padding:12px 15px;margin:5px 3px;border:0;border-radius:12px;
+  background:linear-gradient(135deg,#a855f7,#ec4899);
+  color:white;font-weight:bold;font-size:14px;cursor:pointer
+}
 button.secondary{background:#7045d9}
-button:disabled{opacity:.5}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{background:#382455;padding:13px 5px;text-align:center;border-radius:12px}
-.stat strong{display:block;font-size:20px;color:#ffd76a;margin-top:5px}
+button:disabled{opacity:.5;cursor:not-allowed}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{background:#382455;padding:14px 5px;text-align:center;border-radius:13px;font-size:12px}
+.stat strong{display:block;font-size:20px;color:#ffd76a;margin-top:7px}
 #numbers{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}
-.ball{width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:#f5eaff;color:#29143f;font-weight:bold;font-size:17px}
-#card{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:350px}
-.cell{aspect-ratio:1;background:#fff;color:#24123b;border-radius:9px;display:grid;place-items:center;font-size:18px;font-weight:bold}
+.ball{
+  width:40px;height:40px;border-radius:50%;display:grid;
+  place-items:center;background:#f5eaff;color:#29143f;
+  font-weight:bold;font-size:16px
+}
+#card{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;max-width:350px}
+.cell{
+  aspect-ratio:1;background:#fff;color:#24123b;border-radius:9px;
+  display:grid;place-items:center;font-size:17px;font-weight:bold
+}
 .cell.marked{background:#ffd45b}
-.small{font-size:13px;color:#d5c5ed}
-#messageGC{overflow-wrap:anywhere}
-footer{text-align:center;padding:20px;color:#bba9d8;font-size:13px}
-
-/* NOUVEAU DESIGN GAMMECLUB */
-body {
-  background: linear-gradient(145deg, #17102f, #352064, #17102f);
-  color: #ffffff;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
+#messageGC,#bingoMessage{overflow-wrap:anywhere;line-height:1.6}
+footer{text-align:center;padding:25px 15px;color:#bba9d8;font-size:12px}
+@media(max-width:430px){
+  header h1{font-size:31px}
+  .grid{gap:9px}
+  .activity{padding:15px 11px;min-height:135px}
+  .panel{padding:16px}
+  .stat strong{font-size:17px}
 }
-header {
-  background: linear-gradient(135deg, #7c3aed, #ec4899, #6366f1);
-  padding: 30px 18px;
-  border-radius: 0 0 28px 28px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-}
-header h1 {
-  font-size: 36px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
-}
-header p {
-  font-size: 15px;
-  line-height: 1.6;
-}
-main {
-  max-width: 850px;
-  margin: 24px auto;
-  padding: 0 14px;
-}
-.panel {
-  background: rgba(255, 255, 255, 0.09);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 22px;
-  padding: 20px;
-  margin-bottom: 18px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16);
-}
-h2 {
-  color: #f9a8d4;
-}
-button {
-  border: none;
-  border-radius: 14px;
-  padding: 12px 18px;
-  background: linear-gradient(135deg, #a855f7, #ec4899);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(236, 72, 153, 0.3);
-}
-input {
-  border-radius: 12px;
-  padding: 12px;
-  border: 1px solid #c4b5fd;
-}
-footer {
-  color: #d8b4fe;
-}</style>
+</style>
 </head>
 <body>
+
 <header>
-<h1>🎮 GammeClub</h1>
-<p>Joue ensemble, gagne des Éclats, brille dans le club !</p>
+  <div class="logo">💎🎮✨</div>
+  <h1>GammeClub</h1>
+  <p>Joue ensemble, gagne des Éclats,<br>brille dans le club !</p>
 </header>
+
 <main>
-  <section class="panel" style="text-align:center; padding:28px 20px;">
-  <h2 style="font-size:28px; margin-top:0;">💜 Bienvenue dans GammeClub !</h2>
-  <p>Rencontre des joueurs, joue ensemble et fais briller ton profil !</p>
-  <p>🎮 Des jeux • 🎤 Des salles vocales • 💬 Des amis</p>
-  <p>✨ Gagne des Éclats et découvre ton univers de jeu.</p>
-</section>
-<section class="panel" id="connexion">
-<h2>🔐 Ton compte</h2>
-<p class="small">Connecte-toi ou crée ton compte GammeClub.</p>
-<input id="emailGC" type="email" placeholder="Ton adresse e-mail" autocomplete="email">
-<input id="passwordGC" type="password" placeholder="Ton mot de passe" autocomplete="current-password">
-<button id="inscriptionGC">Créer mon compte</button>
-<button id="connexionGC" class="secondary">Me connecter</button>
-<button id="deconnexionGC" class="secondary" hidden>Me déconnecter</button>
-<p id="messageGC">Bienvenue sur GammeClub !</p>
-</section>
+  <section class="panel welcome">
+    <h2>💜 Bienvenue dans GammeClub !</h2>
+    <p>Ton univers de jeux, de rencontres et de fun t'attend.</p>
+    <p>🎮 Joue · 🎤 Rencontre · 💬 Partage · ✨ Fais briller ton profil</p>
+    <a href="#activites"><button>Découvrir GammeClub ↓</button></a>
+  </section>
 
-<section class="panel">
-<h2>🌟 Mon profil</h2>
-<div class="stats">
-<div class="stat">✨ Éclats<strong id="eclats">0</strong></div>
-<div class="stat">💎 Diamants<strong id="diamants">0</strong></div>
-<div class="stat">☀️ Rayonnement<strong id="rayonnement">0</strong></div>
-</div>
-<p class="small">Les Éclats sont gagnés dans ce prototype. Les diamants et le Rayonnement sont distincts.</p>
-</section>
+  <section class="panel" id="activites">
+    <h2>🌟 Explore ton univers</h2>
+    <p class="small">Choisis ce que tu veux découvrir !</p>
+    <div class="grid">
+      <a class="activity" href="#voix">
+        <div class="emoji">🎤</div>
+        <h3>Salles vocales</h3>
+        <p>Retrouve les autres membres et prépare tes prochaines discussions.</p>
+        <span class="tag">Bientôt disponible</span>
+      </a>
+      <a class="activity" href="#jeux">
+        <div class="emoji">🎮</div>
+        <h3>Les jeux</h3>
+        <p>Amuse-toi avec le Bingo et découvre les prochains jeux.</p>
+        <span class="tag">Bingo disponible</span>
+      </a>
+      <a class="activity" href="#messages">
+        <div class="emoji">💬</div>
+        <h3>Messages</h3>
+        <p>Un espace prévu pour échanger avec les membres.</p>
+        <span class="tag">Bientôt disponible</span>
+      </a>
+      <a class="activity" href="#club">
+        <div class="emoji">✨</div>
+        <h3>Fil du Club</h3>
+        <p>Un futur fil pour partager tes publications et tes moments.</p>
+        <span class="tag">Bientôt disponible</span>
+      </a>
+    </div>
+  </section>
 
-<section class="panel">
-<h2>🎱 Bingo GammeClub</h2>
-<p id="gameStatus">Appuie sur « Nouvelle partie » pour commencer.</p>
-<div id="card"></div>
-<div id="numbers"></div>
-<button id="newGame">Nouvelle partie</button>
-<button id="drawNumber" class="secondary" disabled>Tirer un numéro</button>
-<p id="bingoMessage"></p>
-</section>
+  <section class="panel" id="connexion">
+    <h2>🔐 Ton compte GammeClub</h2>
+    <p class="small">Connecte-toi ou crée ton compte pour retrouver ton espace.</p>
+    <input id="emailGC" type="email" placeholder="Ton adresse e-mail" autocomplete="email">
+    <input id="passwordGC" type="password" placeholder="Ton mot de passe" autocomplete="current-password">
+    <button id="inscriptionGC">Créer mon compte</button>
+    <button id="connexionGC" class="secondary">Me connecter</button>
+    <button id="deconnexionGC" class="secondary" hidden>Me déconnecter</button>
+    <p id="messageGC" role="status">Bienvenue sur GammeClub !</p>
+  </section>
+
+  <section class="panel" id="profil">
+    <h2>🌟 Mon profil</h2>
+    <div class="stats">
+      <div class="stat">✨ Éclats<strong id="eclats">0</strong></div>
+      <div class="stat">💎 Diamants<strong id="diamants">0</strong></div>
+      <div class="stat">☀️ Rayonnement<strong id="rayonnement">0</strong></div>
+    </div>
+    <p class="small">Les Éclats sont la monnaie de jeu. Les Diamants sont la monnaie premium et le Rayonnement mesure le prestige. Les compteurs affichés ici sont encore des démonstrations.</p>
+  </section>
+
+  <section class="panel" id="jeux">
+    <h2>🎱 Bingo GammeClub</h2>
+    <p id="gameStatus">Appuie sur « Nouvelle partie » pour commencer.</p>
+    <div id="card"></div>
+    <div id="numbers"></div>
+    <button id="newGame">Nouvelle partie</button>
+    <button id="drawNumber" class="secondary" disabled>Tirer un numéro</button>
+    <p id="bingoMessage" role="status"></p>
+    <p class="small">Cette version du Bingo est une démonstration locale. Les Éclats gagnés ne sont pas encore enregistrés dans ton compte.</p>
+  </section>
+
+  <section class="panel" id="voix">
+    <h2>🎤 Salles vocales</h2>
+    <p>Les salles vocales seront ajoutées dans une prochaine étape.</p>
+    <p class="small">Le son et les conversations en direct ne sont pas encore activés.</p>
+  </section>
+
+  <section class="panel" id="messages">
+    <h2>💬 Messages</h2>
+    <p>La messagerie privée sera ajoutée dans une prochaine étape.</p>
+  </section>
+
+  <section class="panel" id="club">
+    <h2>✨ Fil du Club</h2>
+    <p>Les publications partagées entre membres seront ajoutées prochainement.</p>
+  </section>
 </main>
-<footer>GammeClub · Prototype en cours de création</footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<footer>💜 GammeClub · Un univers à partager · Version en construction</footer>
 
 <script>
 (() => {
 const SUPABASE_URL = 'https://ngklurznqhlbuvkwkykk.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Kohd9SkDvFXUsgFPmWQlPw_vM3VPCY9'
+const SUPABASE_KEY = 'sb_publishable_Kohd9SkDvFXUsgFPmWQlPw_vM3VPCY9';
 const $ = id => document.getElementById(id);
 let client = null;
 let session = null;
@@ -159,11 +214,7 @@ function updateStats() {
 
 function setupSupabase() {
   if (!window.supabase) {
-    message('Impossible de charger le service de connexion. Vérifie Internet.');
-    return;
-  }
-  if (SUPABASE_KEY === 'REMPLACE_PAR_TA_CLE_PUBLIABLE_SUPABASE') {
-    message('Ajoute ta clé publique Supabase dans le code pour activer les comptes.');
+    message('Impossible de charger la connexion. Vérifie Internet.');
     return;
   }
   try {
@@ -185,7 +236,7 @@ function setupSupabase() {
 }
 
 $('inscriptionGC').addEventListener('click', async () => {
-  if (!client) return message('La connexion Supabase doit être configurée.');
+  if (!client) return message('La connexion doit être configurée.');
   const email = $('emailGC').value.trim();
   const password = $('passwordGC').value;
   if (!email || password.length < 6) {
@@ -204,7 +255,7 @@ $('inscriptionGC').addEventListener('click', async () => {
 });
 
 $('connexionGC').addEventListener('click', async () => {
-  if (!client) return message('La connexion Supabase doit être configurée.');
+  if (!client) return message('La connexion doit être configurée.');
   const email = $('emailGC').value.trim();
   const password = $('passwordGC').value;
   if (!email || !password) return message('Entre ton e-mail et ton mot de passe.');
@@ -279,7 +330,6 @@ function drawNumber() {
   ball.textContent = number;
   $('numbers').prepend(ball);
   renderCard();
-
   if (hasLine()) {
     gameOver = true;
     eclats += 10;
@@ -300,4 +350,3 @@ setupSupabase();
 </script>
 </body>
 </html>
-En
