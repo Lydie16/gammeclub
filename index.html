@@ -13,7 +13,137 @@
 @media(max-width:470px){.grid,.rooms{grid-template-columns:1fr}.hero h1{font-size:39px}.wallet{gap:6px}.wallet div{padding:10px 4px}.wallet strong{font-size:20px}.section-head{align-items:start;flex-direction:column}}
 </style>
 </head>
-<body>
+<style>
+#gc-shop{background:linear-gradient(145deg,#211037,#42175c);color:white;padding:18px;border-radius:20px;margin:20px 10px 100px;font-family:Arial,sans-serif;border:1px solid #8951b4}
+#gc-shop h2{margin:0 0 6px}
+#gc-shop p{color:#ddc8ee;font-size:13px}
+#gc-shop .balance{padding:12px;background:#190d29;border-radius:12px;margin:14px 0;color:#f7d66b}
+#gc-shop .cats{display:flex;gap:7px;overflow:auto;margin:12px 0}
+#gc-shop button{cursor:pointer}
+#gc-shop .cats button{border:1px solid #8c60a8;background:#321747;color:white;border-radius:20px;padding:9px 12px;white-space:nowrap}
+#gc-shop .cats button.active{background:#a346d6}
+#gc-shop .gifts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#gc-shop .gift{background:#321b49;border:1px solid #694182;border-radius:15px;color:white;padding:14px 5px;text-align:center}
+#gc-shop .gift.selected{border:2px solid #f1a8ff;background:#57256d}
+#gc-shop .emoji{display:block;font-size:38px;margin-bottom:7px}
+#gc-shop .price{display:block;color:#f6d17b;font-size:13px;margin-top:7px}
+#gc-shop label{display:block;margin:15px 0 7px;font-size:14px}
+#gc-shop input{width:100%;padding:12px;border-radius:10px;border:1px solid #8956a7;background:#190d29;color:white;box-sizing:border-box}
+#gc-shop .send{width:100%;margin-top:14px;padding:14px;border:0;border-radius:12px;background:linear-gradient(90deg,#c64dff,#ff62bb);color:white;font-weight:bold;font-size:15px}
+#gc-shop .note{font-size:11px;color:#cbb7dc;line-height:1.5}
+#gc-effect{display:none;position:fixed;inset:0;z-index:999999;background:radial-gradient(circle,#8a32cb,#180622 75%);color:white;align-items:center;justify-content:center;text-align:center;padding:20px;overflow:hidden}
+#gc-effect .big{font-size:clamp(90px,25vw,160px);animation:gc-pulse .8s infinite alternate}
+#gc-effect .spark{position:absolute;font-size:28px;animation:gc-fly 2s infinite}
+#gc-effect button{padding:12px 24px;border-radius:20px;border:1px solid white;background:#35104e;color:white}
+@keyframes gc-pulse{to{transform:scale(1.18) rotate(5deg);filter:drop-shadow(0 0 25px #ffd9ff)}}
+@keyframes gc-fly{from{transform:translateY(40px) rotate(0);opacity:0}50%{opacity:1}to{transform:translateY(-90px) rotate(180deg);opacity:0}}
+</style>
+
+<section id="gc-shop">
+  <h2>🎁 Boutique GammeClub</h2>
+  <p>Fais plaisir aux membres du club !</p>
+  <div class="balance">💎 Tes diamants : solde à connecter</div>
+  <div class="cats">
+    <button class="active" data-cat="all">🎁 Tous</button>
+    <button data-cat="simple">💖 Cadeaux</button>
+    <button data-cat="special">✨ Spécial</button>
+    <button data-cat="vip">👑 VIP</button>
+    <button data-cat="legend">🐉 Mythiques</button>
+  </div>
+  <div class="gifts">
+    <button class="gift selected" data-cat="simple" data-name="Rose" data-emoji="🌹" data-price="10">
+      <span class="emoji">🌹</span>Rose
+      <span class="price">💎 10</span>
+    </button>
+    <button class="gift" data-cat="simple" data-name="Cœur" data-emoji="💖" data-price="20">
+      <span class="emoji">💖</span>Cœur
+      <span class="price">💎 20</span>
+    </button>
+    <button class="gift" data-cat="special" data-name="Coffre magique" data-emoji="🎁" data-price="100">
+      <span class="emoji">🎁</span>Coffre magique
+      <span class="price">💎 100</span>
+    </button>
+    <button class="gift" data-cat="special" data-name="Diamant" data-emoji="💎" data-price="250">
+      <span class="emoji">💎</span>Diamant
+      <span class="price">💎 250</span>
+    </button>
+    <button class="gift" data-cat="vip" data-name="Couronne royale" data-emoji="👑" data-price="1000">
+      <span class="emoji">👑</span>Couronne royale
+      <span class="price">💎 1 000</span>
+    </button>
+    <button class="gift" data-cat="legend" data-name="Dragon légendaire" data-emoji="🐉" data-price="5000">
+      <span class="emoji">🐉</span>Dragon légendaire
+      <span class="price">💎 5 000</span>
+    </button>
+  </div>
+  <label for="gc-recipient">À qui envoyer le cadeau ?</label>
+  <input id="gc-recipient" placeholder="Nom du membre">
+  <button class="send" id="gc-send">🎁 Choisir ce cadeau</button>
+  <p class="note">Maquette de la boutique : les prix sont des exemples. Aucun diamant n'est débité et aucun cadeau n'est réellement envoyé pour le moment.</p>
+</section>
+
+<div id="gc-effect">
+  <span class="spark" style="left:12%;top:20%">✨</span>
+  <span class="spark" style="left:75%;top:18%;animation-delay:.5s">⭐</span>
+  <span class="spark" style="left:20%;top:75%;animation-delay:.8s">💫</span>
+  <span class="spark" style="left:80%;top:70%;animation-delay:1s">✨</span>
+  <div>
+    <div style="font-size:20px">🎉 UN CADEAU POUR TOI ! 🎉</div>
+    <div class="big" id="gc-big">🐉</div>
+    <h2 id="gc-effect-name">Dragon légendaire</h2>
+    <p id="gc-effect-text"></p>
+    <button id="gc-close">Fermer</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const shop=document.getElementById('gc-shop');
+  if(!shop || shop.dataset.ready)return;
+  shop.dataset.ready='1';
+  let selected=shop.querySelector('.gift');
+  shop.querySelectorAll('.gift').forEach(g=>{
+    g.addEventListener('click',()=>{
+      shop.querySelectorAll('.gift').forEach(x=>x.classList.remove('selected'));
+      g.classList.add('selected');
+      selected=g;
+    });
+  });
+  shop.querySelectorAll('.cats button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      shop.querySelectorAll('.cats button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      shop.querySelectorAll('.gift').forEach(g=>{
+        g.style.display=b.dataset.cat==='all'||g.dataset.cat===b.dataset.cat?'block':'none';
+      });
+    });
+  });
+  document.getElementById('gc-send').addEventListener('click',()=>{
+    const recipient=document.getElementById('gc-recipient').value.trim();
+    if(!recipient){alert('Écris le nom du membre qui recevra le cadeau.');return;}
+    document.getElementById('gc-big').textContent=selected.dataset.emoji;
+    document.getElementById('gc-effect-name').textContent=selected.dataset.name;
+    document.getElementById('gc-effect-text').textContent='Un cadeau pour '+recipient+' !';
+    const effect=document.getElementById('gc-effect');
+    effect.style.display='flex';
+    if(Number(selected.dataset.price)>=1000){
+      effect.style.background='radial-gradient(circle,#b77a12,#47105e 65%,#12051c)';
+    }else{
+      effect.style.background='radial-gradient(circle,#8a32cb,#180622 75%)';
+    }
+  });
+  document.getElementById('gc-close').addEventListener('click',()=>{
+    document.getElementById('gc-effect').style.display='none';
+  });
+})();
+</script>
+Envoyé
+Rédiger
+Écrire à
+
+
+
+  <body>
 <nav class="topbar"><div class="brand">🎮 Gamme<span>Club</span></div><div class="top-actions"><button class="secondary" onclick="goTo('compte')">Mon compte</button><button onclick="goTo('salles')">Découvrir</button></div></nav>
 <div class="wrap">
 <header class="hero" id="accueil"><div class="hero-copy"><span class="eyebrow">✨ TON CLUB, TES AMIS, TES JEUX</span><h1>Bienvenue dans <span class="gradient-text">GammeClub</span> !</h1><p>Rencontre des joueurs, retrouve tes amis, rejoins les salles vocales et joue ensemble. Fais briller ton profil et gagne des Éclats au fil de tes parties !</p><div class="hero-buttons"><button onclick="goTo('salles')">🎙️ Rejoindre le club</button><button class="secondary" onclick="goTo('jeux')">🎲 Découvrir les jeux</button></div><div class="notice">🚧 GammeClub est en construction : les espaces et jeux présentés ici sont la première interface. Les appels vocaux réels et les fonctions multijoueurs seront activés après leur configuration.</div></div><div class="hero-art"><div><div class="orb">🎮</div><div class="art-caption">Joue. Partage. Brille.</div><div class="art-small">💜 Une communauté qui se retrouve</div></div></div></header>
