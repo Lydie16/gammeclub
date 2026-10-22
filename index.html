@@ -1,456 +1,162 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GammeClub 🎮 — Joue ensemble</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10091d">
+<title>GammeClub 🎮</title>
 <style>
-:root{--pink:#ff45c8;--purple:#7b45ff;--blue:#2869ff;--bg:#090d28;--panel:#171d45;--text:#fff;--muted:#c4c9f4;--line:#ffffff22}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 0%,#34206f 0,transparent 36%),radial-gradient(circle at 100% 20%,#173c85 0,transparent 30%),var(--bg);font-family:Arial,sans-serif;color:var(--text);min-height:100vh}button,input{font:inherit}button{cursor:pointer;border:0;color:white;font-weight:700;border-radius:13px;padding:12px 16px;background:linear-gradient(110deg,var(--pink),var(--purple));box-shadow:0 6px 18px #0003;transition:transform .18s,filter .18s}button:hover{transform:translateY(-2px);filter:brightness(1.08)}button.secondary{background:#ffffff12;border:1px solid var(--line);box-shadow:none}button.blue{background:linear-gradient(110deg,#2869ff,#4d9dff)}.topbar{position:sticky;top:0;z-index:10;background:#0c1034eF;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:12px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:900;font-size:25px;letter-spacing:-.7px}.brand span{color:#ff6ad7}.top-actions{display:flex;gap:8px;align-items:center}.wrap{width:min(1120px,92%);margin:auto}.hero{padding:52px 0 28px;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}.hero-copy,.hero-art,.panel,.feature{background:linear-gradient(145deg,#ffffff12,#ffffff05);border:1px solid var(--line);border-radius:25px;box-shadow:0 18px 50px #0002}.hero-copy{padding:35px}.eyebrow{display:inline-block;padding:7px 12px;border:1px solid #ff68d844;border-radius:999px;color:#ff9be8;background:#ff45c812;font-size:13px;font-weight:bold}.hero h1{font-size:clamp(36px,5vw,60px);line-height:1.04;margin:18px 0}.gradient-text{background:linear-gradient(90deg,#ff72d7,#a88bff,#72b8ff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{font-size:17px;line-height:1.65;color:var(--muted);max-width:580px}.hero-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.hero-art{min-height:320px;padding:24px;display:grid;place-items:center;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 35%,#7b45ff77,transparent 60%),linear-gradient(150deg,#20235a,#101631)}.orb{font-size:95px;filter:drop-shadow(0 14px 25px #ff45c866);animation:float 3s ease-in-out infinite}.art-caption{text-align:center;font-size:22px;font-weight:900}.art-small{color:var(--muted);font-size:13px;text-align:center;margin-top:8px}@keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-10px) rotate(4deg)}}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:10px 0 32px}.stat{padding:16px;border-radius:18px;background:#ffffff0b;border:1px solid var(--line);text-align:center}.stat strong{display:block;font-size:23px}.stat span{color:var(--muted);font-size:13px}.section{padding:20px 0 30px;scroll-margin-top:80px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:17px}.section h2{font-size:27px;margin:0 0 7px}.sub{color:var(--muted);margin:0;line-height:1.5}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature{padding:20px;min-height:185px}.feature .emoji{font-size:32px}.feature h3{margin:13px 0 8px}.feature p{color:var(--muted);line-height:1.5;font-size:14px}.feature button{margin-top:5px}.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.room{padding:18px;border-radius:20px;background:linear-gradient(145deg,#20265a,#141936);border:1px solid var(--line)}.room-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.live{font-size:11px;border-radius:999px;padding:5px 8px;background:#2ad69b22;color:#76f2c7;border:1px solid #2ad69b44}.room p{color:var(--muted);font-size:14px;line-height:1.5}.room button{width:100%;margin-top:6px}.panel{padding:22px;margin:15px 0 30px}.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{width:100%;padding:14px;border-radius:12px;background:#0c1230;border:1px solid #ffffff2b;color:white;margin:5px 0 12px;outline:none}.field:focus{border-color:#b99aff}.small{font-size:12px;color:var(--muted);line-height:1.5}.status{margin-top:12px;color:#a7f5d9;font-size:14px;overflow-wrap:anywhere}.wallet{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.wallet div{background:#ffffff0b;border:1px solid var(--line);border-radius:15px;padding:14px;text-align:center}.wallet strong{display:block;font-size:24px}.wallet span{font-size:12px;color:var(--muted)}.feed-form{display:grid;gap:10px}.feed-form textarea{min-height:90px;resize:vertical}.post{padding:15px;margin-top:12px;background:#ffffff0a;border:1px solid var(--line);border-radius:15px;overflow-wrap:anywhere}.post .date{font-size:12px;color:var(--muted)}.footer{text-align:center;color:#9ca5d8;padding:30px 0 100px;font-size:13px}.bottom-nav{display:none;position:fixed;z-index:20;bottom:0;left:0;right:0;background:#0b1034f5;backdrop-filter:blur(15px);border-top:1px solid var(--line);padding:8px 5px calc(8px + env(safe-area-inset-bottom));justify-content:space-around}.bottom-nav a{color:#d7dcff;text-decoration:none;font-size:11px;text-align:center;display:grid;gap:4px;min-width:52px}.bottom-nav a span{font-size:20px}.notice{border:1px solid #ffc85755;background:#ffc85710;color:#ffe5a2;padding:12px 14px;border-radius:13px;font-size:13px;line-height:1.5;margin-top:12px}
-@media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:25px}.hero-copy{padding:24px}.hero-art{min-height:230px}.grid,.rooms{grid-template-columns:1fr 1fr}.stats{gap:7px}.stat{padding:12px 5px}.stat strong{font-size:19px}.auth-grid{grid-template-columns:1fr}.bottom-nav{display:flex}.topbar{padding:12px 4%}.top-actions button{padding:10px;font-size:12px}.brand{font-size:21px}.section h2{font-size:23px}}
-@media(max-width:470px){.grid,.rooms{grid-template-columns:1fr}.hero h1{font-size:39px}.wallet{gap:6px}.wallet div{padding:10px 4px}.wallet strong{font-size:20px}.section-head{align-items:start;flex-direction:column}}
+*{box-sizing:border-box}
+body{margin:0;background:#10091d;color:white;font-family:Arial,sans-serif;padding-bottom:85px}
+header{padding:18px;background:#211333;position:sticky;top:0;z-index:5;border-bottom:1px solid #7041a0}
+.logo{font-size:25px;font-weight:bold;color:#ff65d4}
+main{max-width:800px;margin:auto;padding:14px}
+section,.card{background:linear-gradient(145deg,#29163e,#171022);border:1px solid #75419b;border-radius:18px;padding:17px;margin:14px 0}
+h1{font-size:35px}h2{color:#ff8bdf}
+p{color:#d9c8e9;line-height:1.5}
+button{border:0;border-radius:12px;padding:12px;background:linear-gradient(100deg,#ff39c7,#8744ff);color:white;font-weight:bold;margin:4px;cursor:pointer}
+input,textarea,select{width:100%;padding:12px;margin:7px 0;background:#10091d;color:white;border:1px solid #75419b;border-radius:10px}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#171022;padding:8px 2px;border-top:1px solid #75419b;z-index:10}
+nav button{flex:1;background:transparent;font-size:11px;padding:8px 1px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.gift{background:#321747;border:1px solid #a34cd5;border-radius:14px;padding:12px;text-align:center;cursor:pointer}
+.gift span{display:block;font-size:36px}
+.gift.active{border:2px solid #ff77e1}
+.balance{padding:14px;color:#ffe18c;font-weight:bold;background:#3a2250;border-radius:12px;margin:12px 0}
+.small{font-size:12px}
+#effect{display:none;position:fixed;inset:0;background:radial-gradient(#9a36d9,#10091d);z-index:20;align-items:center;justify-content:center;text-align:center;padding:20px}
+#effect .emoji{font-size:110px;animation:pop .7s infinite alternate}
+@keyframes pop{to{transform:scale(1.2) rotate(5deg)}}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
-<style>
-#gc-shop{background:linear-gradient(145deg,#211037,#42175c);color:white;padding:18px;border-radius:20px;margin:20px 10px 100px;font-family:Arial,sans-serif;border:1px solid #8951b4}
-#gc-shop h2{margin:0 0 6px}
-#gc-shop p{color:#ddc8ee;font-size:13px}
-#gc-shop .balance{padding:12px;background:#190d29;border-radius:12px;margin:14px 0;color:#f7d66b}
-#gc-shop .cats{display:flex;gap:7px;overflow:auto;margin:12px 0}
-#gc-shop button{cursor:pointer}
-#gc-shop .cats button{border:1px solid #8c60a8;background:#321747;color:white;border-radius:20px;padding:9px 12px;white-space:nowrap}
-#gc-shop .cats button.active{background:#a346d6}
-#gc-shop .gifts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-#gc-shop .gift{background:#321b49;border:1px solid #694182;border-radius:15px;color:white;padding:14px 5px;text-align:center}
-#gc-shop .gift.selected{border:2px solid #f1a8ff;background:#57256d}
-#gc-shop .emoji{display:block;font-size:38px;margin-bottom:7px}
-#gc-shop .price{display:block;color:#f6d17b;font-size:13px;margin-top:7px}
-#gc-shop label{display:block;margin:15px 0 7px;font-size:14px}
-#gc-shop input{width:100%;padding:12px;border-radius:10px;border:1px solid #8956a7;background:#190d29;color:white;box-sizing:border-box}
-#gc-shop .send{width:100%;margin-top:14px;padding:14px;border:0;border-radius:12px;background:linear-gradient(90deg,#c64dff,#ff62bb);color:white;font-weight:bold;font-size:15px}
-#gc-shop .note{font-size:11px;color:#cbb7dc;line-height:1.5}
-#gc-effect{display:none;position:fixed;inset:0;z-index:999999;background:radial-gradient(circle,#8a32cb,#180622 75%);color:white;align-items:center;justify-content:center;text-align:center;padding:20px;overflow:hidden}
-#gc-effect .big{font-size:clamp(90px,25vw,160px);animation:gc-pulse .8s infinite alternate}
-#gc-effect .spark{position:absolute;font-size:28px;animation:gc-fly 2s infinite}
-#gc-effect button{padding:12px 24px;border-radius:20px;border:1px solid white;background:#35104e;color:white}
-@keyframes gc-pulse{to{transform:scale(1.18) rotate(5deg);filter:drop-shadow(0 0 25px #ffd9ff)}}
-@keyframes gc-fly{from{transform:translateY(40px) rotate(0);opacity:0}50%{opacity:1}to{transform:translateY(-90px) rotate(180deg);opacity:0}}
-/* Animations des cadeaux GammeClub */
-#gc-shop .gift {
-  position: relative;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-#gc-shop .gift:hover {
-  transform: translateY(-4px) scale(1.04);
-  box-shadow: 0 0 18px rgba(190, 100, 255, 0.75);
-}
-
-#gc-shop .gift:active {
-  animation: gc-gift-pop 0.55s ease;
-}
-
-#gc-shop .gift[data-cat="legend"]:hover {
-  box-shadow: 0 0 22px #8b5cff, 0 0 40px #00d9ff;
-}
-
-@keyframes gc-gift-pop {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.12) rotate(-2deg); }
-  70% { transform: scale(0.96) rotate(2deg); }
-  100% { transform: scale(1); }
-}
-Envoyé
-</style>
-
-<section id="gc-shop">
-  <h2>🎁 Boutique GammeClub</h2>
-  <p>Fais plaisir aux membres du club !</p>
-  <div class="balance">💎 Tes diamants : <span id="gc-diamants">30000</span></div>
-  <div class="cats">
-    <button class="active" data-cat="all">🎁 Tous</button>
-    <button data-cat="simple">💖 Cadeaux</button>
-    <button data-cat="special">✨ Spécial</button>
-    <button data-cat="vip">👑 VIP</button>
-    <button data-cat="legend">🐉 Mythiques</button>
-  </div>
-  <div class="gifts">
-    <button class="gift selected" data-cat="simple" data-name="Rose" data-emoji="🌹" data-price="10">
-      <span class="emoji">🌹</span>Rose
-      <span class="price">💎 10</span>
-    </button>
-    <button class="gift" data-cat="simple" data-name="Cœur" data-emoji="💖" data-price="20">
-      <span class="emoji">💖</span>Cœur
-      <span class="price">💎 20</span>
-    </button>
-    <button class="gift" data-cat="special" data-name="Coffre magique" data-emoji="🎁" data-price="100">
-      <span class="emoji">🎁</span>Coffre magique
-      <span class="price">💎 100</span>
-    </button>
-    <button class="gift" data-cat="special" data-name="Diamant" data-emoji="💎" data-price="250">
-      <span class="emoji">💎</span>Diamant
-      <span class="price">💎 250</span>
-    </button>
-    <button class="gift" data-cat="vip" data-name="Couronne royale" data-emoji="👑" data-price="1000">
-      <span class="emoji">👑</span>Couronne royale
-      <span class="price">💎 1 000</span>
-    </button>
-    <button class="gift" data-cat="legend" data-name="Dragon légendaire" data-emoji="🐉" data-price="5000">
-      <span class="emoji">🐉</span>Dragon légendaire
-      <span class="price">💎 5 000</span>
-    </button>
-  </div>
-  <label for="gc-recipient">À qui envoyer le cadeau ?</label>
-  <input id="gc-recipient" placeholder="Nom du membre">
-  <button class="send" id="gc-send">🎁 Choisir ce cadeau</button>
-  <p class="note">Maquette de la boutique : les prix sont des exemples. Aucun diamant n'est débité et aucun cadeau n'est réellement envoyé pour le moment.</p>
+<body>
+<header><div class="logo">🎮 GammeClub</div></header>
+<main>
+<section id="accueil">
+<h1>Bienvenue dans <span style="color:#ff65d4">GammeClub !</span></h1>
+<p>Retrouve tes amis, rejoins les salons, joue ensemble et envoie des cadeaux spectaculaires. 💜</p>
+<button onclick="aller('salles')">🎙️ Les salons</button>
+<button onclick="aller('jeux')">🎮 Les jeux</button>
 </section>
 
-<div id="gc-effect">
-  <span class="spark" style="left:12%;top:20%">✨</span>
-  <span class="spark" style="left:75%;top:18%;animation-delay:.5s">⭐</span>
-  <span class="spark" style="left:20%;top:75%;animation-delay:.8s">💫</span>
-  <span class="spark" style="left:80%;top:70%;animation-delay:1s">✨</span>
-  <div>
-    <div style="font-size:20px">🎉 UN CADEAU POUR TOI ! 🎉</div>
-    <div class="big" id="gc-big">🐉</div>
-    <h2 id="gc-effect-name">Dragon légendaire</h2>
-    <p id="gc-effect-text"></p>
-    <button id="gc-close">Fermer</button>
-  </div>
+<section id="salles">
+<h2>🎙️ Salons vocaux</h2>
+<div class="grid">
+<div class="card">💬 <b>Le Salon</b><p>Discuter et faire connaissance.</p><button onclick="salon('Le Salon')">Entrer</button></div>
+<div class="card">🎮 <b>Coin Gaming</b><p>Retrouver des joueurs.</p><button onclick="salon('Coin Gaming')">Entrer</button></div>
+<div class="card">🌙 <b>Détente</b><p>Un moment tranquille.</p><button onclick="salon('Détente')">Entrer</button></div>
 </div>
+<p id="salonInfo"></p>
+<p class="small">Les vrais micros et appels vocaux nécessitent un service vocal connecté.</p>
+</section>
 
-<script>
-(function(){
-  const shop=document.getElementById('gc-shop');
-  if(!shop || shop.dataset.ready)return;
-  shop.dataset.ready='1';
-  let selected=shop.querySelector('.gift');
-  shop.querySelectorAll('.gift').forEach(g=>{
-    g.addEventListener('click',()=>{
-      shop.querySelectorAll('.gift').forEach(x=>x.classList.remove('selected'));
-      g.classList.add('selected');
-      selected=g;
-    });
-  });
-  shop.querySelectorAll('.cats button').forEach(b=>{
-    b.addEventListener('click',()=>{
-      shop.querySelectorAll('.cats button').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-      shop.querySelectorAll('.gift').forEach(g=>{
-        g.style.display=b.dataset.cat==='all'||g.dataset.cat===b.dataset.cat?'block':'none';
-      });
-    });
-  });
-  document.getElementById('gc-send').addEventListener('click',()=>{
-    const recipient=document.getElementById('gc-recipient').value.trim();
-    if(!recipient){alert('Écris le nom du membre qui recevra le cadeau.');return;}
-    document.getElementById('gc-big').textContent=selected.dataset.emoji;
-    document.getElementById('gc-effect-name').textContent=selected.dataset.name;
-    document.getElementById('gc-effect-text').textContent='Un cadeau pour '+recipient+' !';
-    const effect=document.getElementById('gc-effect');
-    effect.style.display='flex';
-    if(Number(selected.dataset.price)>=1000){
-      effect.style.background='radial-gradient(circle,#b77a12,#47105e 65%,#12051c)';
-    }else{
-      effect.style.background='radial-gradient(circle,#8a32cb,#180622 75%)';
-    }
-  });
-  document.getElementById('gc-close').addEventListener('click',()=>{
-    document.getElementById('gc-effect').style.display='none';
-  });
-})();
-  // Animation du cadeau choisi
-  const boutonEnvoi = document.getElementById('gc-send');
-
-  if (boutonEnvoi) {
-    boutonEnvoi.addEventListener('click', function () {
-      const cadeau = document.querySelector('#gc-shop .gift.selected');
-      const icone = document.getElementById('gc-big');
-
-      if (cadeau && icone) {
-        icone.textContent = cadeau.dataset.emoji || '🎁';
-        icone.style.animation = 'none';
-        void icone.offsetWidth;
-        icone.style.animation = '';
-      }
-    });
-  }
-</script>
-Envoyé
-Rédiger
-Écrire à
-
-
-
-  <body>
-<nav class="topbar"><div class="brand">🎮 Gamme<span>Club</span></div><div class="top-actions"><button class="secondary" onclick="goTo('compte')">Mon compte</button><button onclick="goTo('salles')">Découvrir</button></div></nav>
-<div class="wrap">
-<header class="hero" id="accueil"><div class="hero-copy"><span class="eyebrow">✨ TON CLUB, TES AMIS, TES JEUX</span><h1>Bienvenue dans <span class="gradient-text">GammeClub</span> !</h1><p>Rencontre des joueurs, retrouve tes amis, rejoins les salles vocales et joue ensemble. Fais briller ton profil et gagne des Éclats au fil de tes parties !</p><div class="hero-buttons"><button onclick="goTo('salles')">🎙️ Rejoindre le club</button><button class="secondary" onclick="goTo('jeux')">🎲 Découvrir les jeux</button></div><div class="notice">🚧 GammeClub est en construction : les espaces et jeux présentés ici sont la première interface. Les appels vocaux réels et les fonctions multijoueurs seront activés après leur configuration.</div></div><div class="hero-art"><div><div class="orb">🎮</div><div class="art-caption">Joue. Partage. Brille.</div><div class="art-small">💜 Une communauté qui se retrouve</div></div></div></header>
-<div class="stats"><div class="stat"><strong>🎙️</strong><span>Salles vocales</span></div><div class="stat"><strong>🎲</strong><span>Jeux entre amis</span></div><div class="stat"><strong>✨</strong><span>Éclats & profils</span></div></div>
-<section class="section" id="salles"><div class="section-head"><div><h2>🎙️ Les salles vocales</h2><p class="sub">Choisis une ambiance et retrouve les membres du club.</p></div></div><div class="rooms"><article class="room"><div class="room-top"><h3>💬 Le Salon</h3><span class="live">Salon public</span></div><p>Pour discuter, faire connaissance et passer un bon moment.</p><button onclick="roomInfo('Le Salon')">Entrer dans la salle</button></article><article class="room"><div class="room-top"><h3>🎮 Coin Gaming</h3><span class="live">Gaming</span></div><p>Parle stratégie, organise une partie et trouve des coéquipiers.</p><button onclick="roomInfo('Coin Gaming')">Entrer dans la salle</button></article><article class="room"><div class="room-top"><h3>🌙 Détente</h3><span class="live">Chill</span></div><p>Une ambiance tranquille pour papoter entre membres.</p><button onclick="roomInfo('Détente')">Entrer dans la salle</button></article></div><p class="small" id="roomStatus" role="status"></p></section>
-<section class="section" id="jeux"><div class="section-head"><div><h2>🕹️ Les jeux du club</h2><p class="sub">Choisis ton univers : de nouvelles parties arrivent.</p></div></div><div class="grid"><article class="feature"><div class="emoji">🏁</div><h3>Course de karts</h3><p>Des courses fun, des virages et des défis entre amis.</p><button class="secondary" onclick="gameInfo('Course de karts')">Découvrir</button></article><article class="feature"><div class="emoji">🃏</div><h3>UNO du club</h3><p>Pose tes cartes, change le jeu et sois le premier à finir.</p><button class="secondary" onclick="gameInfo('UNO du club')">Découvrir</button></article><article class="feature"><div class="emoji">🐺</div><h3>Loups-Garous</h3><p>Bluff, déduction et votes : sauras-tu découvrir les loups ?</p><button class="secondary" onclick="gameInfo('Loups-Garous')">Découvrir</button></article><article class="feature"><div class="emoji">♠️</div><h3>Poker entre amis</h3><p>Une table conviviale en jetons virtuels, sans argent réel.</p><button class="secondary" onclick="gameInfo('Poker entre amis')">Découvrir</button></article><article class="feature"><div class="emoji">🔢</div><h3>Bingo</h3><p>Retrouve le Bingo de démonstration et tente ta chance.</p><button onclick="goTo('bingo')">Voir le Bingo</button></article><article class="feature"><div class="emoji">✨</div><h3>Défis du club</h3><p>De nouveaux défis et récompenses pourront être ajoutés.</p><button class="secondary" onclick="gameInfo('Défis du club')">Bientôt</button></article></div></section>
-<section class="section" id="fil"><div class="section-head"><div><h2>📰 Le fil du Club</h2><p class="sub">Publie un petit message sur cet appareil. Le partage entre tous les membres sera connecté ensuite.</p></div></div><div class="panel"><form class="feed-form" id="postForm"><textarea class="field" id="postText" maxlength="500" placeholder="Quoi de neuf dans le club ?" required></textarea><button type="submit">Publier mon message</button></form><div id="posts"><p class="small">Pas encore de publication sur cette session. Les messages ici ne sont pas encore partagés avec les autres membres.</p></div></div></section>
-<section class="section" id="compte"><div class="panel"><h2>🔐 Ton compte GammeClub</h2><p class="sub">Connecte-toi ou crée ton compte pour retrouver ton profil.</p><div class="auth-grid"><div><label for="email">Adresse e-mail</label><input class="field" id="email" type="email" autocomplete="email" placeholder="Ton adresse e-mail"><label for="password">Mot de passe</label><input class="field" id="password" type="password" autocomplete="current-password" placeholder="Ton mot de passe"><div class="hero-buttons"><button id="signupBtn" type="button">Créer mon compte</button><button class="blue" id="loginBtn" type="button">Me connecter</button><button class="secondary" id="logoutBtn" type="button">Me déconnecter</button></div><p class="status" id="authStatus" role="status">Vérification de la connexion…</p></div><div><h3>⭐ Mon profil</h3><p id="profileEmail" class="sub">Connecte-toi pour afficher ton profil.</p><div class="wallet"><div><strong id="eclats">0</strong><span>✨ Éclats</span></div><div><strong id="diamants">0</strong><span>💎 Diamants</span></div><div><strong id="rayonnement">0</strong><span>🌟 Rayonnement</span></div></div><p class="small">Les soldes sont chargés depuis ton profil Supabase lorsqu’une session est ouverte.</p></div></div></div></section>
-<section class="section" id="bingo"><div class="panel"><div class="section-head"><div><h2>🔢 Bingo de démonstration</h2><p class="sub">Un petit jeu local pour tester l’interface.</p></div><span class="eyebrow">Démo</span></div><p id="bingoStatus">Lance une partie puis tire les numéros. Il faut compléter une ligne pour gagner.</p><div id="bingoCard" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;max-width:360px;margin:18px 0"></div><div class="hero-buttons"><button id="newBingo">Nouvelle partie</button><button class="blue" id="drawBingo">Tirer un numéro</button></div><p class="small">Cette version de démonstration est locale : elle ne crédite pas de vraie monnaie ni de solde de compte.</p></div></section>
-<footer class="footer">🎮 GammeClub · Joue ensemble, gagne des Éclats, brille dans le club !<br>Version en construction</footer>
+<section id="jeux">
+<h2>🕹️ Les jeux</h2>
+<div class="grid">
+<div class="card">🏁<h3>Course de karts</h3><p>Défis entre amis.</p></div>
+<div class="card">🃏<h3>UNO</h3><p>Joue aux cartes.</p></div>
+<div class="card">🐺<h3>Loups-Garous</h3><p>Bluff et stratégie.</p></div>
+<div class="card">♠️<h3>Poker</h3><p>Jetons virtuels, sans argent réel.</p></div>
+<div class="card"><h3>🔢 Bingo</h3><p id="bingoInfo">Appuie pour tirer un numéro.</p><button onclick="bingo()">Tirer un numéro</button></div>
+<div class="card">✨<h3>Défis du club</h3><p>Bientôt disponibles.</p></div>
 </div>
-<div class="bottom-nav"><a href="#accueil"><span>🏠</span>Accueil</a><a href="#salles"><span>🎙️</span>Salles</a><a href="#jeux"><span>🎮</span>Jeux</a><a href="#fil"><span>📰</span>Fil du Club</a><a href="#compte"><span>⭐</span>Profil</a></div>
-<script>
-// IMPORTANT : remplace uniquement la valeur de SUPABASE_KEY par ta clé publishable actuelle.
-const SUPABASE_URL = 'https://ngklurznqhlbuvkwkykk.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Kohd9SkDvFXUsgFPmWQlPw_vM3VPCY9';
-let supabaseClient = null, currentUser = null;
-const $ = id => document.getElementById(id);
-function goTo(id){$(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
-function roomInfo(name){$('roomStatus').textContent='🎙️ « '+name+' » est prête côté interface. Le vrai audio LiveKit doit encore être relié à un serveur sécurisé avant de pouvoir parler dans cette salle.';}
-function gameInfo(name){alert('🎮 '+name+' : cette section est prévue dans GammeClub. Le jeu complet sera ajouté dans une prochaine étape.');}
-function setStatus(text){$('authStatus').textContent=text;}
-function initSupabase(){if(!window.supabase){setStatus('Le service de connexion ne se charge pas. Vérifie ta connexion Internet.');return;}if(SUPABASE_KEY==='COLLE_ICI_TA_CLE_SUPABASE_PUBLISHABLE'){setStatus('Il reste une seule chose à faire dans le code : coller ta clé publishable Supabase à la ligne indiquée.');return;}try{supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);supabaseClient.auth.getSession().then(({data,error})=>{if(error)throw error;currentUser=data.session?.user||null;refreshUser();}).catch(e=>setStatus('Connexion Supabase : '+e.message));supabaseClient.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;refreshUser();});}catch(e){setStatus('Erreur de configuration Supabase. Vérifie l’URL et la clé publishable.');}}
-async function refreshUser(){if(!currentUser){$('profileEmail').textContent='Connecte-toi pour afficher ton profil.';$('eclats').textContent='0';$('diamants').textContent='0';$('rayonnement').textContent='0';if(supabaseClient)setStatus('Tu n’es pas connecté.');return;}$('profileEmail').textContent=currentUser.email||'Membre GammeClub';setStatus('Connexion réussie 💜');if(!supabaseClient)return;const {data,error}=await supabaseClient.from('profiles').select('eclats, diamants, rayonnement').eq('id',currentUser.id).maybeSingle();if(error){setStatus('Connecté, mais les statistiques du profil ne sont pas disponibles : '+error.message);return;}if(data){$('eclats').textContent=data.eclats??0;$('diamants').textContent=data.diamants??0;$('rayonnement').textContent=data.rayonnement??0;}}
-async function authAction(action){if(!supabaseClient){setStatus('La clé Supabase doit être configurée dans le code avant la connexion.');return;}const email=$('email').value.trim(),password=$('password').value;if(!email||!password){setStatus('Entre ton adresse e-mail et ton mot de passe.');return;}setStatus('Patiente un instant…');let result;if(action==='signup')result=await supabaseClient.auth.signUp({email,password});else if(action==='login')result=await supabaseClient.auth.signInWithPassword({email,password});else result=await supabaseClient.auth.signOut();if(result.error){setStatus('Oups : '+result.error.message);return;}if(action==='signup'&&!result.data.session)setStatus('Compte créé ! Vérifie tes e-mails pour confirmer ton adresse.');else setStatus(action==='logout'?'Tu es déconnecté.':'Connexion réussie 💜');}
-$('signupBtn').addEventListener('click',()=>authAction('signup'));$('loginBtn').addEventListener('click',()=>authAction('login'));$('logoutBtn').addEventListener('click',()=>authAction('logout'));
-$('postForm').addEventListener('submit',e=>{e.preventDefault();const text=$('postText').value.trim();if(!text)return;const post=document.createElement('article');post.className='post';const body=document.createElement('p');body.textContent=text;const meta=document.createElement('div');meta.className='date';meta.textContent='Publié sur cet appareil · '+new Date().toLocaleString('fr-FR');post.append(body,meta);const posts=$('posts');if(posts.querySelector('.small'))posts.innerHTML='';posts.prepend(post);$('postText').value='';});
-let bingoNums=[],marked=new Set(),drawn=[];function startBingo(){bingoNums=Array.from({length:75},(_,i)=>i+1).sort(()=>Math.random()-.5).slice(0,25);marked=new Set([12]);drawn=[];$('bingoStatus').textContent='Nouvelle partie ! Tire un numéro.';renderBingo();$('drawBingo').disabled=false;}
-function renderBingo(){const card=$('bingoCard');card.innerHTML='';bingoNums.forEach((n,i)=>{const cell=document.createElement('div');cell.textContent=i===12?'★':n;cell.style.cssText='aspect-ratio:1;display:grid;place-items:center;border-radius:10px;background:'+(marked.has(i)?'linear-gradient(135deg,#ff45c8,#7b45ff)':'#ffffff12')+';border:1px solid #ffffff25;font-weight:800';card.appendChild(cell);});}
-function drawBingo(){if(drawn.length>=75)return;const pool=Array.from({length:75},(_,i)=>i+1).filter(n=>!drawn.includes(n));const n=pool[Math.floor(Math.random()*pool.length)];drawn.push(n);const idx=bingoNums.indexOf(n);if(idx>=0)marked.add(idx);renderBingo();$('bingoStatus').textContent='Numéro tiré : '+n+' · Numéros tirés : '+drawn.length;if(checkBingo()){ $('bingoStatus').textContent='🎉 Bingo ! Tu as complété une ligne dans cette démo.';$('drawBingo').disabled=true;}else if(drawn.length>=75){$('bingoStatus').textContent='Fin de la partie. Lance une nouvelle partie pour rejouer.';$('drawBingo').disabled=true;}}
-function checkBingo(){const lines=[[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],[0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],[0,6,12,18,24],[4,8,12,16,20]];return lines.some(line=>line.every(i=>marked.has(i)));}
-$('newBingo').addEventListener('click',startBingo);$('drawBingo').addEventListener('click',drawBingo);startBingo();initSupabase();
-</script>
+</section>
 
-</script>
-<style>
-#gc-bottom-menu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9998;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 2px calc(10px + env(safe-area-inset-bottom));
-  background: #190d2d;
-  border-top: 1px solid #7545a8;
-  box-shadow: 0 -4px 20px #0005;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-#gc-bottom-menu button {
-  background: transparent;
-  color: white;
-  border: 0;
-  border-radius: 12px;
-  padding: 7px 3px;
-  font-size: 11px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  flex: 1;
-  cursor: pointer;
-}
-#gc-bottom-menu button span {
-  font-size: 21px;
-}
-#gc-bottom-menu button.active {
-  color: #d5a5ff;
-  background: #392052;
-}
-body {
-  padding-bottom: 85px !important;
-}
-</style>
+<section id="boutique">
+<h2>🎁 Boutique de cadeaux</h2>
+<div class="balance">💎 Tes diamants : <span id="diamants">30000</span></div>
+<p>Choisis un cadeau et le membre qui le recevra.</p>
+<div class="grid" id="cadeaux">
+<div class="gift active" data-nom="Rose" data-emoji="🌹" data-prix="10"><span>🌹</span>Rose<strong>💎 10</strong></div>
+<div class="gift" data-nom="Cœur" data-emoji="💖" data-prix="20"><span>💖</span>Cœur<strong>💎 20</strong></div>
+<div class="gift" data-nom="Coffre magique" data-emoji="🎁" data-prix="100"><span>🎁</span>Coffre magique<strong>💎 100</strong></div>
+<div class="gift" data-nom="Diamant" data-emoji="💎" data-prix="250"><span>💎</span>Diamant<strong>💎 250</strong></div>
+<div class="gift" data-nom="Couronne royale" data-emoji="👑" data-prix="1000"><span>👑</span>Couronne royale<strong>💎 1 000</strong></div>
+<div class="gift" data-nom="Château de glace" data-emoji="🏰" data-prix="2500"><span>🏰</span>Château de glace<strong>💎 2 500</strong></div>
+<div class="gift" data-nom="Dragon légendaire" data-emoji="🐉" data-prix="5000"><span>🐉</span>Dragon légendaire<strong>💎 5 000</strong></div>
+</div>
+<label for="destinataire">Pseudo du destinataire</label>
+<input id="destinataire" placeholder="Pseudo du membre">
+<button style="width:100%" onclick="cadeau()">🎁 Envoyer un cadeau (démo)</button>
+<p class="small">Démonstration : aucun diamant n'est débité et aucun cadeau n'est réellement envoyé. Solde conservé à 30 000.</p>
+</section>
 
-<nav id="gc-bottom-menu">
-  <button class="active" data-gc="Accueil">
-    <span>🏠</span>Accueil
-  </button>
-  <button data-gc="Salles vocales">
-    <span>🎙️</span>Salles
-  </button>
-  <button data-gc="Jeux entre amis">
-    <span>🎮</span>Jeux
-  </button>
-  <button data-gc="Messages">
-    <span>💬</span>Messages
-  </button>
-  <button data-gc="Mon compte">
-    <span>👤</span>Profil
-  </button>
+<section id="profil">
+<h2>👤 Mon profil</h2>
+<label for="pseudo">Mon pseudo</label><input id="pseudo" placeholder="Choisis ton pseudo">
+<label for="avatar">Mon avatar</label>
+<select id="avatar"><option>💜</option><option>🎮</option><option>🐉</option><option>👑</option><option>🌸</option><option>⭐</option></select>
+<button onclick="profil()">Enregistrer mon profil</button>
+<div class="card"><span id="monAvatar" style="font-size:45px">💜</span><h3 id="monPseudo">Membre GammeClub</h3></div>
+<p class="small">Le profil est enregistré sur cet appareil. La connexion réelle sera ajoutée ultérieurement.</p>
+</section>
+
+<section id="messages">
+<h2>💬 Messages de démonstration</h2>
+<div id="conversation" class="card">💜 Bienvenue sur GammeClub !</div>
+<textarea id="message" placeholder="Écris ton message"></textarea>
+<button onclick="envoyerMessage()">Envoyer</button>
+<p class="small">Les messages restent sur cet appareil : ils ne sont pas transmis aux autres membres.</p>
+</section>
+</main>
+
+<nav>
+<button onclick="aller('accueil')">🏠<br>Accueil</button>
+<button onclick="aller('salles')">🎙️<br>Salles</button>
+<button onclick="aller('jeux')">🎮<br>Jeux</button>
+<button onclick="aller('messages')">💬<br>Messages</button>
+<button onclick="aller('profil')">👤<br>Profil</button>
 </nav>
 
+<div id="effect">
+<div>
+<h2>🎉 UN CADEAU POUR TOI ! 🎉</h2>
+<div class="emoji" id="effEmoji">🐉</div>
+<h2 id="effNom"></h2>
+<p id="effTexte"></p>
+<button onclick="document.getElementById('effect').style.display='none'">Fermer</button>
+</div>
+</div>
+
 <script>
-(function () {
-  const menu = document.getElementById("gc-bottom-menu");
-
-  menu.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", () => {
-      const destination = button.dataset.gc;
-
-      menu.querySelectorAll("button").forEach(item => {
-        item.classList.toggle("active", item === button);
-      });
-
-      const elements = [...document.querySelectorAll(
-        "button, a, [role='tab'], h1, h2, h3"
-      )];
-
-      const target = elements.find(element =>
-        element.id !== "gc-bottom-menu" &&
-        element.textContent.trim().toLowerCase() ===
-        destination.toLowerCase()
-      );
-
-      if (target) {
-        if (target.matches("button, a, [role='tab']")) {
-          target.click();
-        } else {
-          target.scrollIntoView({ behavior: "smooth" });
-        }
-      } else {
-        const alternatives = {
-          "Accueil": ["Accueil", "GammeClub"],
-          "Salles vocales": ["Salles vocales", "Les salles vocales"],
-          "Jeux entre amis": ["Jeux entre amis", "Jeux"],
-          "Messages": ["Messages", "Messagerie"],
-          "Mon compte": ["Mon compte", "Profil"]
-        };
-
-        const words = alternatives[destination] || [];
-        const fallback = elements.find(element =>
-          words.some(word =>
-            element.textContent.trim().toLowerCase() ===
-            word.toLowerCase()
-          )
-        );
-
-        if (fallback) {
-          if (fallback.matches("button, a, [role='tab']")) {
-            fallback.click();
-          } else {
-            fallback.scrollIntoView({ behavior: "smooth" });
-          }
-        }
-      }
-    });
-  });
-})();
+function aller(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+function salon(n){document.getElementById('salonInfo').textContent='Tu as choisi « '+n+' ». Le salon vocal en direct sera activé avec le serveur vocal.';}
+let choisi=document.querySelector('.gift.active');
+document.querySelectorAll('.gift').forEach(g=>g.onclick=()=>{
+ document.querySelectorAll('.gift').forEach(x=>x.classList.remove('active'));
+ g.classList.add('active');choisi=g;
+});
+function cadeau(){
+ const dest=document.getElementById('destinataire').value.trim();
+ if(!dest){alert('Entre le pseudo du destinataire.');return;}
+ document.getElementById('effEmoji').textContent=choisi.dataset.emoji;
+ document.getElementById('effNom').textContent=choisi.dataset.nom;
+ document.getElementById('effTexte').textContent='Un cadeau pour '+dest+' !';
+ document.getElementById('effect').style.display='flex';
+}
+function profil(){
+ const p=document.getElementById('pseudo').value.trim()||'Membre GammeClub';
+ const a=document.getElementById('avatar').value;
+ document.getElementById('monPseudo').textContent=p;
+ document.getElementById('monAvatar').textContent=a;
+ try{localStorage.setItem('gcProfil',JSON.stringify({p,a}));}catch(e){}
+ alert('Profil enregistré sur cet appareil !');
+}
+try{
+ const p=JSON.parse(localStorage.getItem('gcProfil')||'null');
+ if(p){document.getElementById('pseudo').value=p.p;document.getElementById('avatar').value=p.a;document.getElementById('monPseudo').textContent=p.p;document.getElementById('monAvatar').textContent=p.a;}
+}catch(e){}
+function envoyerMessage(){
+ const champ=document.getElementById('message'),t=champ.value.trim();
+ if(!t)return;
+ const p=document.createElement('p');p.textContent='👤 Moi : '+t;
+ document.getElementById('conversation').appendChild(p);champ.value='';
+}
+function bingo(){
+ const n=Math.floor(Math.random()*75)+1;
+ document.getElementById('bingoInfo').textContent='Numéro tiré : '+n;
+}
 </script>
-<style>
-/* Boutique GammeClub : style magique */
-#gc-shop {
-  background:
-    radial-gradient(ellipse at top, #572078 0%, transparent 55%),
-    linear-gradient(160deg, #10051f, #260b3b 55%, #10051f) !important;
-  border: 1px solid #d65cff !important;
-  box-shadow: 0 0 25px #a52cff55, inset 0 0 30px #a52cff18 !important;
-  border-radius: 24px !important;
-  padding: 18px !important;
-}
-
-#gc-shop h2 {
-  color: #ffd6ff !important;
-  text-shadow: 0 0 8px #ff4de1, 0 0 22px #a42cff;
-  font-size: 25px !important;
-}
-
-#gc-shop .balance {
-  border: 1px solid #e8c36c !important;
-  background: linear-gradient(100deg, #26133f, #49235e) !important;
-  box-shadow: 0 0 15px #e8bd5540;
-  border-radius: 16px !important;
-}
-
-#gc-shop .gift {
-  position: relative;
-  overflow: hidden;
-  min-height: 145px;
-  background:
-    radial-gradient(circle at 50% 25%, #713a9166, transparent 60%),
-    linear-gradient(150deg, #321747, #170b28) !important;
-  border: 1px solid #bd59ed !important;
-  border-radius: 18px !important;
-  box-shadow: 0 0 12px #c43cff25, inset 0 0 15px #b340ff12;
-  transition: transform .2s, box-shadow .2s;
-}
-
-#gc-shop .gift:hover,
-#gc-shop .gift.selected {
-  transform: translateY(-3px);
-  border: 2px solid #ff9bfa !important;
-  box-shadow: 0 0 18px #f04bff77, inset 0 0 20px #c43cff30;
-}
-
-#gc-shop .emoji {
-  font-size: 48px !important;
-  filter: drop-shadow(0 0 8px #ff8aff);
-  animation: gc-gift-float 2.4s ease-in-out infinite alternate;
-}
-
-#gc-shop .gift:nth-child(3n) .emoji {
-  animation-delay: -.8s;
-}
-
-#gc-shop .price {
-  color: #ffe49b !important;
-  font-weight: bold;
-  text-shadow: 0 0 8px #e8b84d55;
-}
-
-/* Cadeaux VIP et légendaires */
-#gc-shop .gift[data-price="1000"],
-#gc-shop .gift[data-price="2500"],
-#gc-shop .gift[data-price="5000"] {
-  border: 1px solid #ffc95c !important;
-  background:
-    radial-gradient(circle at 50% 20%, #a56a2e66, transparent 65%),
-    linear-gradient(150deg, #3c2044, #190b28) !important;
-  box-shadow: 0 0 15px #ffc34a35, inset 0 0 18px #ffc34a12;
-}
-
-#gc-shop .gift[data-price="5000"] {
-  border: 2px solid #ffb632 !important;
-  box-shadow: 0 0 22px #ff9e3d77, inset 0 0 22px #ffb63222;
-}
-
-#gc-shop .cats button {
-  transition: .2s;
-}
-
-#gc-shop .cats button.active {
-  background: linear-gradient(100deg, #f52bdc, #913cff) !important;
-  border-color: #ffc5ff !important;
-  box-shadow: 0 0 16px #e44dff88;
-}
-
-#gc-shop .send {
-  background: linear-gradient(100deg, #f22bc9, #9b35ff, #ff65ae) !important;
-  box-shadow: 0 0 18px #dc40ff66;
-  border: 1px solid #ffc4ff !important;
-}
-
-#gc-effect {
-  background:
-    radial-gradient(circle at center, #922bdb, #390957 55%, #10031c) !important;
-}
-
-#gc-effect .big {
-  filter: drop-shadow(0 0 25px #ffb9ff);
-}
-
-@keyframes gc-gift-float {
-  from { transform: translateY(0) scale(1); }
-  to { transform: translateY(-5px) scale(1.06); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #gc-shop .emoji { animation: none !important; }
-  #gc-shop .gift { transition: none !important; }
-}
-</style>
-
-  </body>
+</body>
 </html>
