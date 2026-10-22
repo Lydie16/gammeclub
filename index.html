@@ -3,139 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GammeClub</title>
+<title>GammeClub - Cadeaux VIP</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090512;color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:22px 10px;background:linear-gradient(135deg,#210b3c,#090512);border-bottom:1px solid #8e27d9}
-.logo{font-size:35px;font-weight:900;color:#ff62e8;text-shadow:0 0 18px #ce00ff}
-.slogan{font-size:10px;letter-spacing:3px;color:#dfb8ff;margin-top:7px}
-.balance{display:inline-block;margin-top:15px;padding:10px 20px;border:1px solid #ffcf65;border-radius:30px;background:#21142f;font-weight:bold}
-nav{display:flex;gap:8px;padding:12px;overflow-x:auto;background:#12091d}
-nav button,.filter{flex-shrink:0;border:1px solid #61327c;background:#241333;color:white;border-radius:25px;padding:11px 14px}
-button.active,.filter.active{background:linear-gradient(90deg,#9b00ff,#ff27c9)}
-.hero{margin:14px;padding:22px 10px;text-align:center;border:1px solid #b337ff;border-radius:20px;background:radial-gradient(circle at center,#552080,#170b28 65%,#0a0612);box-shadow:0 0 20px #a000ff40}
-.hero-art{font-size:70px;filter:drop-shadow(0 0 12px #d52cff)}
-.hero h1{font-size:29px;color:#ffdc87;text-shadow:0 0 15px #ff9c28}
-.hero p{font-size:13px;line-height:1.6;color:#ead7ff}
-h2{font-size:21px;margin:23px 14px 12px}
+body{margin:0;background:#090611;color:#fff;font-family:Arial,sans-serif}
+header{padding:18px 10px;text-align:center;background:linear-gradient(135deg,#24103b,#090611);border-bottom:1px solid #a52cff}
+.logo{font-size:clamp(27px,6vw,42px);font-weight:900;color:#ff67e9;text-shadow:0 0 15px #db00ff}
+.slogan{font-size:10px;letter-spacing:3px;color:#e7baff;margin:7px}
+.balance{display:inline-block;margin-top:10px;padding:10px 17px;border:1px solid #ffce68;border-radius:30px;background:#21132f}
+nav{display:flex;gap:7px;padding:12px;overflow-x:auto;background:#12091c}
+nav button,.filter{white-space:nowrap;color:white;background:#241333;border:1px solid #623780;border-radius:24px;padding:11px 14px}
+nav button.active,.filter.active{background:linear-gradient(90deg,#9b00ff,#ff29ca)}
+.hero{margin:12px;padding:18px 8px;text-align:center;border:1px solid #a93cff;border-radius:17px;background:radial-gradient(circle at 20% 50%,#167dff55,transparent 35%),radial-gradient(circle at 85% 50%,#ff00db66,transparent 40%),linear-gradient(135deg,#170a2a,#38104c,#0a0612);box-shadow:0 0 20px #a000ff44}
+.hero-art{font-size:clamp(48px,12vw,78px);filter:drop-shadow(0 0 12px #d23cff)}
+.hero h1{margin:7px 0;color:#ffdc87;font-size:clamp(25px,6vw,38px);text-shadow:0 0 14px #ff9b29}
+.hero p{font-size:12px;line-height:1.6;color:#f2dfff}
+h2{font-size:21px;margin:20px 13px 12px}
 .filters{display:flex;gap:7px;overflow-x:auto;padding:0 12px 14px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 12px 100px}
-.gift{position:relative;text-align:center;border:1px solid #633b83;border-radius:16px;background:linear-gradient(145deg,#29143e,#100819);overflow:hidden;padding-bottom:12px}
-.gift.vip{border-color:#ffd16b;box-shadow:0 0 12px #ffbe4933}
-.art{height:125px;display:flex;align-items:center;justify-content:center;font-size:65px;background:radial-gradient(circle,#61208a,#1a0c29 70%);text-shadow:0 0 20px #e96aff}
-.tag{position:absolute;top:7px;left:7px;background:#ffcc65;color:#32153d;border-radius:5px;padding:4px 6px;font-size:10px;font-weight:bold}
-.gift h3{font-size:14px;margin:10px 3px}
-.price{color:#8eeaff;font-size:14px;font-weight:bold;margin:8px}
-.send{width:88%;padding:10px 4px;border:0;border-radius:22px;background:linear-gradient(90deg,#9700ff,#f423c9);font-weight:bold}
-footer{position:fixed;bottom:0;left:0;right:0;background:#130a20;border-top:1px solid #60347b;display:flex;justify-content:space-around;padding:12px 2px}
-footer button{border:0;background:none;color:#e4c5ff;font-size:10px}
-footer span{display:block;font-size:21px;margin-bottom:4px}
-#effect{display:none;position:fixed;inset:0;background:#080311f5;z-index:10;align-items:center;justify-content:center;text-align:center;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 10px 95px}
+.gift{position:relative;overflow:hidden;text-align:center;border:1px solid #70428e;border-radius:14px;background:linear-gradient(145deg,#29143e,#100819);padding-bottom:11px}
+.gift.vip{border-color:#ffd16b;box-shadow:0 0 13px #ffbf4930}
+.art{height:clamp(120px,35vw,190px);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle,#61208a,#1a0c29 72%);font-size:60px}
+.art img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.art .emoji{filter:drop-shadow(0 0 15px #e34cff)}
+.tag{position:absolute;z-index:2;top:7px;left:7px;padding:4px 6px;border-radius:5px;background:linear-gradient(90deg,#ffd05d,#fff0a1);color:#32153d;font-size:10px;font-weight:bold}
+.gift h3{font-size:13px;margin:10px 3px 7px}
+.price{color:#8ce8ff;font-weight:bold;font-size:14px;margin:7px}
+.send{width:88%;padding:10px 4px;border:0;border-radius:22px;color:white;font-weight:bold;background:linear-gradient(90deg,#9700ff,#f423c9);box-shadow:0 0 10px #c000ff55}
+footer{position:fixed;bottom:0;left:0;right:0;z-index:5;display:flex;justify-content:space-around;background:#130a20f5;border-top:1px solid #67377e;padding:10px 1px calc(10px + env(safe-area-inset-bottom))}
+footer button{border:0;background:none;color:#e3c5ff;font-size:10px}
+footer span{display:block;font-size:20px;margin-bottom:4px}
+#effect{display:none;position:fixed;inset:0;z-index:10;background:#080311f5;align-items:center;justify-content:center;text-align:center;padding:20px}
 #effect.show{display:flex}
-.effect-icon{font-size:130px;animation:glow 1s infinite alternate}
-.effect-title{font-size:32px;color:#ffdc87}
-.close{border:0;border-radius:25px;background:#b000ff;color:white;padding:12px 25px}
-@keyframes glow{to{transform:scale(1.13);filter:drop-shadow(0 0 30px #ed42ff)}}
-@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));max-width:1000px;margin:auto}}
+.effect-icon{font-size:clamp(90px,22vw,150px);animation:glow 1s infinite alternate}
+.effect-title{font-size:clamp(25px,7vw,38px);color:#ffdc87;text-shadow:0 0 20px #ff9c28}
+.close{border:0;border-radius:25px;background:linear-gradient(90deg,#9700ff,#f423c9);color:white;padding:12px 25px}
+@keyframes glow{to{transform:scale(1.1);filter:drop-shadow(0 0 30px #ed42ff)}}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));max-width:1100px;margin:auto}.art{height:190px}}
 </style>
 </head>
 <body>
 <header>
-<div class="logo">✦ GammeClub 👑</div>
-<div class="slogan">DISCUTE · JOUE · PARTAGE · BRILLE</div>
-<div class="balance">💎 <span id="balance">30 000</span> DIAMANTS</div>
+  <div class="logo">✦ GammeClub 👑</div>
+  <div class="slogan">DISCUTE · JOUE · PARTAGE · BRILLE</div>
+  <div class="balance">💎 <b id="balance">30 000</b> diamants　＋</div>
 </header>
 
 <nav>
-<button onclick="info('Accueil')">🏠 Accueil</button>
-<button onclick="info('Salons vocaux')">🎙️ Salons</button>
-<button onclick="info('Jeux')">🎮 Jeux</button>
-<button class="active">🎁 Boutique</button>
-<button onclick="info('Amis')">👥 Amis</button>
+  <button onclick="info('Accueil')">🏠 Accueil</button>
+  <button onclick="info('Salons vocaux')">🎙️ Salons</button>
+  <button onclick="info('Jeux')">🎮 Jeux</button>
+  <button class="active">🎁 Boutique</button>
+  <button onclick="info('Événements')">🏆 Événements</button>
+  <button onclick="info('Amis')">👥 Amis</button>
+  <button onclick="info('Profil')">👤 Profil</button>
 </nav>
 
 <section class="hero">
-<div class="hero-art">🏰 ✨ 🐉</div>
-<h1>CADEAUX LÉGENDAIRES</h1>
-<p>Des cadeaux magiques pour faire briller tes amis !<br>Bienvenue dans la boutique VIP GammeClub.</p>
+  <div class="hero-art">🏰 ✨ 🐉</div>
+  <h1>CADEAUX SPECTACULAIRES</h1>
+  <p>FAIS BRILLER TES AMIS<br>AVEC DES CADEAUX UNIQUES 💜</p>
 </section>
 
-<h2>✨ La boutique VIP</h2>
+<h2>✨ Boutique <span style="color:#ff63e8">VIP</span></h2>
 <div class="filters">
-<button class="filter active" onclick="filtrer('Tous',this)">🎁 Tous</button>
-<button class="filter" onclick="filtrer('Luxe',this)">👑 Luxe</button>
-<button class="filter" onclick="filtrer('Amour',this)">💗 Amour</button>
-<button class="filter" onclick="filtrer('Animaux',this)">🐉 Animaux</button>
+  <button class="filter active" onclick="filtrer('Tous',this)">🎁 Tous</button>
+  <button class="filter" onclick="filtrer('Populaires',this)">🔥 Populaires</button>
+  <button class="filter" onclick="filtrer('Luxe',this)">👑 Luxe</button>
+  <button class="filter" onclick="filtrer('Amour',this)">💗 Amour</button>
+  <button class="filter" onclick="filtrer('Animaux',this)">🐾 Animaux</button>
 </div>
 <div class="grid" id="gifts"></div>
 
 <footer>
-<button onclick="info('Accueil')"><span>🏠</span>Accueil</button>
-<button onclick="info('Salons')"><span>🎙️</span>Salons</button>
-<button onclick="info('Jeux')"><span>🎮</span>Jeux</button>
-<button><span>🎁</span>Cadeaux</button>
-<button onclick="info('Messages')"><span>💬</span>Messages</button>
-<button onclick="info('Profil')"><span>👤</span>Profil</button>
+  <button onclick="info('Accueil')"><span>🏠</span>Accueil</button>
+  <button onclick="info('Salons')"><span>🎙️</span>Salons</button>
+  <button onclick="info('Jeux')"><span>🎮</span>Jeux</button>
+  <button><span>🎁</span>Cadeaux</button>
+  <button onclick="info('Classement')"><span>🏆</span>Classement</button>
+  <button onclick="info('Messages')"><span>💬</span>Messages</button>
+  <button onclick="info('Profil')"><span>👤</span>Profil</button>
 </footer>
 
 <div id="effect">
-<div>
-<div class="effect-icon" id="effectIcon">🐉</div>
-<h1 class="effect-title" id="effectTitle">CADEAU LÉGENDAIRE !</h1>
-<p>✨ La magie envahit GammeClub ! ✨</p>
-<button class="close" onclick="document.getElementById('effect').classList.remove('show')">Continuer</button>
-</div>
+  <div>
+    <div id="effectIcon" class="effect-icon">🐉</div>
+    <h1 id="effectTitle" class="effect-title">CADEAU LÉGENDAIRE !</h1>
+    <p>✨ La magie envahit GammeClub ! ✨</p>
+    <button class="close" onclick="document.getElementById('effect').classList.remove('show')">Continuer</button>
+  </div>
 </div>
 
 <script>
 const cadeaux=[
-{nom:"Château de glace",icon:"🏰",prix:2500,cat:"Luxe",vip:1},
-{nom:"Dragon légendaire",icon:"🐉",prix:5000,cat:"Luxe",vip:1},
-{nom:"Phénix de feu",icon:"🔥",prix:3000,cat:"Luxe",vip:1},
-{nom:"Yacht royal",icon:"🛥️",prix:4000,cat:"Luxe",vip:1},
-{nom:"Rose éternelle",icon:"🌹",prix:10,cat:"Amour"},
-{nom:"Cœur magique",icon:"💝",prix:50,cat:"Amour"},
-{nom:"Ourson câlin",icon:"🧸",prix:100,cat:"Amour"},
-{nom:"Couronne royale",icon:"👑",prix:1000,cat:"Luxe",vip:1},
-{nom:"Coffre magique",icon:"💎",prix:250,cat:"Luxe"},
-{nom:"Pluie de diamants",icon:"💠",prix:1200,cat:"Luxe",vip:1},
-{nom:"Lion légendaire",icon:"🦁",prix:3500,cat:"Animaux",vip:1},
-{nom:"Loup mystique",icon:"🐺",prix:800,cat:"Animaux"},
-{nom:"Ailes d'ange",icon:"🪽",prix:1500,cat:"Luxe"},
-{nom:"Arbre enchanté",icon:"🌸",prix:900,cat:"Amour"},
-{nom:"Voiture de luxe",icon:"🏎️",prix:2000,cat:"Luxe"},
-{nom:"Univers infini",icon:"🪐",prix:6000,cat:"Luxe",vip:1}
+ {nom:"Château de glace",icon:"🏰",image:"chateau de glace.jpg",prix:2500,cat:"Luxe",vip:true},
+ {nom:"Dragon légendaire",icon:"🐉",prix:5000,cat:"Luxe",vip:true},
+ {nom:"Phénix d'amour",icon:"🔥",prix:3000,cat:"Amour",vip:true},
+ {nom:"Yacht de rêve",icon:"🛥️",prix:4000,cat:"Luxe",vip:true},
+ {nom:"Rose éternelle",icon:"🌹",prix:10,cat:"Amour"},
+ {nom:"Cœur royal",icon:"💝",prix:50,cat:"Amour"},
+ {nom:"Ourson câlin",icon:"🧸",prix:100,cat:"Amour"},
+ {nom:"Couronne royale",icon:"👑",image:"couronne royale.jpg",prix:1000,cat:"Luxe",vip:true},
+ {nom:"Coffre magique",icon:"💎",image:"cadeaux surprise.jpg",prix:250,cat:"Populaires"},
+ {nom:"Feu d'artifice",icon:"🎆",prix:500,cat:"Populaires"},
+ {nom:"Pluie de diamants",icon:"💠",prix:1200,cat:"Populaires",vip:true},
+ {nom:"Voiture de luxe",icon:"🏎️",prix:2000,cat:"Luxe",vip:true},
+ {nom:"Roi Lion",icon:"🦁",prix:3500,cat:"Animaux",vip:true},
+ {nom:"Loup mystique",icon:"🐺",prix:800,cat:"Animaux"},
+ {nom:"Ailes d'ange",icon:"🪽",prix:1500,cat:"Luxe"},
+ {nom:"Univers infini",icon:"🪐",prix:6000,cat:"Luxe",vip:true}
 ];
+
 let solde=30000;
+
 function afficher(liste){
-const zone=document.getElementById('gifts');
-zone.innerHTML='';
-liste.forEach(c=>{
-const carte=document.createElement('article');
-carte.className='gift'+(c.vip?' vip':'');
-carte.innerHTML=(c.vip?'<div class="tag">✦ VIP ✦</div>':'')+
-'<div class="art">'+c.icon+'</div><h3>'+c.nom+'</h3>'+
-'<div class="price">💎 '+c.prix.toLocaleString('fr-FR')+'</div>'+
-'<button class="send">Envoyer</button>';
-carte.querySelector('.send').onclick=()=>envoyer(c);
-zone.appendChild(carte);
-});
+ const zone=document.getElementById("gifts");
+ zone.innerHTML="";
+ liste.forEach(c=>{
+  const carte=document.createElement("article");
+  carte.className="gift"+(c.vip?" vip":"");
+  const art=document.createElement("div");
+  art.className="art";
+  const emoji=document.createElement("span");
+  emoji.className="emoji";
+  emoji.textContent=c.icon;
+  art.appendChild(emoji);
+
+  if(c.image){
+   const img=document.createElement("img");
+   img.src=c.image;
+   img.alt=c.nom;
+   img.onerror=()=>img.remove();
+   art.appendChild(img);
+  }
+
+  carte.innerHTML=(c.vip?'<span class="tag">👑 VIP</span>':'')+
+   '<h3>'+c.nom+'</h3><div class="price">💎 '+c.prix.toLocaleString("fr-FR")+'</div>'+
+   '<button class="send">Envoyer</button>';
+  carte.insertBefore(art,carte.querySelector("h3"));
+  carte.querySelector(".send").onclick=()=>envoyer(c);
+  zone.appendChild(carte);
+ });
 }
+
 function filtrer(cat,bouton){
-document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
-bouton.classList.add('active');
-afficher(cat==='Tous'?cadeaux:cadeaux.filter(c=>c.cat===cat));
+ document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+ bouton.classList.add("active");
+ afficher(cat==="Tous"?cadeaux:cadeaux.filter(c=>
+  cat==="Populaires" ? c.prix<=1200 : c.cat===cat
+ ));
 }
+
 function envoyer(c){
-if(solde<c.prix){alert("Pas assez de diamants !");return;}
-solde-=c.prix;
-document.getElementById('balance').textContent=solde.toLocaleString('fr-FR');
-document.getElementById('effectIcon').textContent=c.icon;
-document.getElementById('effectTitle').textContent=c.nom.toUpperCase()+' !';
-document.getElementById('effect').classList.add('show');
+ if(solde<c.prix){alert("Tu n'as pas assez de diamants !");return;}
+ solde-=c.prix;
+ document.getElementById("balance").textContent=solde.toLocaleString("fr-FR");
+ document.getElementById("effectIcon").textContent=c.icon;
+ document.getElementById("effectTitle").textContent=c.nom.toUpperCase()+" !";
+ document.getElementById("effect").classList.add("show");
 }
-function info(nom){alert(nom+' : cette fonction sera ajoutée dans une prochaine version.');}
+
+function info(nom){
+ alert(nom+" : cette fonction sera connectée dans une prochaine version.");
+}
 afficher(cadeaux);
 </script>
 </body>
