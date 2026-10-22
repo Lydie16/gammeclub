@@ -3,160 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#10091d">
-<title>GammeClub 🎮</title>
+<title>GammeClub</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#10091d;color:white;font-family:Arial,sans-serif;padding-bottom:85px}
-header{padding:18px;background:#211333;position:sticky;top:0;z-index:5;border-bottom:1px solid #7041a0}
-.logo{font-size:25px;font-weight:bold;color:#ff65d4}
-main{max-width:800px;margin:auto;padding:14px}
-section,.card{background:linear-gradient(145deg,#29163e,#171022);border:1px solid #75419b;border-radius:18px;padding:17px;margin:14px 0}
-h1{font-size:35px}h2{color:#ff8bdf}
-p{color:#d9c8e9;line-height:1.5}
-button{border:0;border-radius:12px;padding:12px;background:linear-gradient(100deg,#ff39c7,#8744ff);color:white;font-weight:bold;margin:4px;cursor:pointer}
-input,textarea,select{width:100%;padding:12px;margin:7px 0;background:#10091d;color:white;border:1px solid #75419b;border-radius:10px}
-nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#171022;padding:8px 2px;border-top:1px solid #75419b;z-index:10}
-nav button{flex:1;background:transparent;font-size:11px;padding:8px 1px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.gift{background:#321747;border:1px solid #a34cd5;border-radius:14px;padding:12px;text-align:center;cursor:pointer}
-.gift span{display:block;font-size:36px}
-.gift.active{border:2px solid #ff77e1}
-.balance{padding:14px;color:#ffe18c;font-weight:bold;background:#3a2250;border-radius:12px;margin:12px 0}
-.small{font-size:12px}
-#effect{display:none;position:fixed;inset:0;background:radial-gradient(#9a36d9,#10091d);z-index:20;align-items:center;justify-content:center;text-align:center;padding:20px}
-#effect .emoji{font-size:110px;animation:pop .7s infinite alternate}
-@keyframes pop{to{transform:scale(1.2) rotate(5deg)}}
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
+body{margin:0;background:#090512;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:22px 10px;background:linear-gradient(135deg,#210b3c,#090512);border-bottom:1px solid #8e27d9}
+.logo{font-size:35px;font-weight:900;color:#ff62e8;text-shadow:0 0 18px #ce00ff}
+.slogan{font-size:10px;letter-spacing:3px;color:#dfb8ff;margin-top:7px}
+.balance{display:inline-block;margin-top:15px;padding:10px 20px;border:1px solid #ffcf65;border-radius:30px;background:#21142f;font-weight:bold}
+nav{display:flex;gap:8px;padding:12px;overflow-x:auto;background:#12091d}
+nav button,.filter{flex-shrink:0;border:1px solid #61327c;background:#241333;color:white;border-radius:25px;padding:11px 14px}
+button.active,.filter.active{background:linear-gradient(90deg,#9b00ff,#ff27c9)}
+.hero{margin:14px;padding:22px 10px;text-align:center;border:1px solid #b337ff;border-radius:20px;background:radial-gradient(circle at center,#552080,#170b28 65%,#0a0612);box-shadow:0 0 20px #a000ff40}
+.hero-art{font-size:70px;filter:drop-shadow(0 0 12px #d52cff)}
+.hero h1{font-size:29px;color:#ffdc87;text-shadow:0 0 15px #ff9c28}
+.hero p{font-size:13px;line-height:1.6;color:#ead7ff}
+h2{font-size:21px;margin:23px 14px 12px}
+.filters{display:flex;gap:7px;overflow-x:auto;padding:0 12px 14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 12px 100px}
+.gift{position:relative;text-align:center;border:1px solid #633b83;border-radius:16px;background:linear-gradient(145deg,#29143e,#100819);overflow:hidden;padding-bottom:12px}
+.gift.vip{border-color:#ffd16b;box-shadow:0 0 12px #ffbe4933}
+.art{height:125px;display:flex;align-items:center;justify-content:center;font-size:65px;background:radial-gradient(circle,#61208a,#1a0c29 70%);text-shadow:0 0 20px #e96aff}
+.tag{position:absolute;top:7px;left:7px;background:#ffcc65;color:#32153d;border-radius:5px;padding:4px 6px;font-size:10px;font-weight:bold}
+.gift h3{font-size:14px;margin:10px 3px}
+.price{color:#8eeaff;font-size:14px;font-weight:bold;margin:8px}
+.send{width:88%;padding:10px 4px;border:0;border-radius:22px;background:linear-gradient(90deg,#9700ff,#f423c9);font-weight:bold}
+footer{position:fixed;bottom:0;left:0;right:0;background:#130a20;border-top:1px solid #60347b;display:flex;justify-content:space-around;padding:12px 2px}
+footer button{border:0;background:none;color:#e4c5ff;font-size:10px}
+footer span{display:block;font-size:21px;margin-bottom:4px}
+#effect{display:none;position:fixed;inset:0;background:#080311f5;z-index:10;align-items:center;justify-content:center;text-align:center;padding:20px}
+#effect.show{display:flex}
+.effect-icon{font-size:130px;animation:glow 1s infinite alternate}
+.effect-title{font-size:32px;color:#ffdc87}
+.close{border:0;border-radius:25px;background:#b000ff;color:white;padding:12px 25px}
+@keyframes glow{to{transform:scale(1.13);filter:drop-shadow(0 0 30px #ed42ff)}}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));max-width:1000px;margin:auto}}
 </style>
 </head>
 <body>
-<header><div class="logo">🎮 GammeClub</div></header>
-<main>
-<section id="accueil">
-<h1>Bienvenue dans <span style="color:#ff65d4">GammeClub !</span></h1>
-<p>Retrouve tes amis, rejoins les salons, joue ensemble et envoie des cadeaux spectaculaires. 💜</p>
-<button onclick="aller('salles')">🎙️ Les salons</button>
-<button onclick="aller('jeux')">🎮 Les jeux</button>
-</section>
-
-<section id="salles">
-<h2>🎙️ Salons vocaux</h2>
-<div class="grid">
-<div class="card">💬 <b>Le Salon</b><p>Discuter et faire connaissance.</p><button onclick="salon('Le Salon')">Entrer</button></div>
-<div class="card">🎮 <b>Coin Gaming</b><p>Retrouver des joueurs.</p><button onclick="salon('Coin Gaming')">Entrer</button></div>
-<div class="card">🌙 <b>Détente</b><p>Un moment tranquille.</p><button onclick="salon('Détente')">Entrer</button></div>
-</div>
-<p id="salonInfo"></p>
-<p class="small">Les vrais micros et appels vocaux nécessitent un service vocal connecté.</p>
-</section>
-
-<section id="jeux">
-<h2>🕹️ Les jeux</h2>
-<div class="grid">
-<div class="card">🏁<h3>Course de karts</h3><p>Défis entre amis.</p></div>
-<div class="card">🃏<h3>UNO</h3><p>Joue aux cartes.</p></div>
-<div class="card">🐺<h3>Loups-Garous</h3><p>Bluff et stratégie.</p></div>
-<div class="card">♠️<h3>Poker</h3><p>Jetons virtuels, sans argent réel.</p></div>
-<div class="card"><h3>🔢 Bingo</h3><p id="bingoInfo">Appuie pour tirer un numéro.</p><button onclick="bingo()">Tirer un numéro</button></div>
-<div class="card">✨<h3>Défis du club</h3><p>Bientôt disponibles.</p></div>
-</div>
-</section>
-
-<section id="boutique">
-<h2>🎁 Boutique de cadeaux</h2>
-<div class="balance">💎 Tes diamants : <span id="diamants">30000</span></div>
-<p>Choisis un cadeau et le membre qui le recevra.</p>
-<div class="grid" id="cadeaux">
-<div class="gift active" data-nom="Rose" data-emoji="🌹" data-prix="10"><span>🌹</span>Rose<strong>💎 10</strong></div>
-<div class="gift" data-nom="Cœur" data-emoji="💖" data-prix="20"><span>💖</span>Cœur<strong>💎 20</strong></div>
-<div class="gift" data-nom="Coffre magique" data-emoji="🎁" data-prix="100"><span>🎁</span>Coffre magique<strong>💎 100</strong></div>
-<div class="gift" data-nom="Diamant" data-emoji="💎" data-prix="250"><span>💎</span>Diamant<strong>💎 250</strong></div>
-<div class="gift" data-nom="Couronne royale" data-emoji="👑" data-prix="1000"><span>👑</span>Couronne royale<strong>💎 1 000</strong></div>
-<div class="gift" data-nom="Château de glace" data-emoji="🏰" data-prix="2500"><span>🏰</span>Château de glace<strong>💎 2 500</strong></div>
-<div class="gift" data-nom="Dragon légendaire" data-emoji="🐉" data-prix="5000"><span>🐉</span>Dragon légendaire<strong>💎 5 000</strong></div>
-</div>
-<label for="destinataire">Pseudo du destinataire</label>
-<input id="destinataire" placeholder="Pseudo du membre">
-<button style="width:100%" onclick="cadeau()">🎁 Envoyer un cadeau (démo)</button>
-<p class="small">Démonstration : aucun diamant n'est débité et aucun cadeau n'est réellement envoyé. Solde conservé à 30 000.</p>
-</section>
-
-<section id="profil">
-<h2>👤 Mon profil</h2>
-<label for="pseudo">Mon pseudo</label><input id="pseudo" placeholder="Choisis ton pseudo">
-<label for="avatar">Mon avatar</label>
-<select id="avatar"><option>💜</option><option>🎮</option><option>🐉</option><option>👑</option><option>🌸</option><option>⭐</option></select>
-<button onclick="profil()">Enregistrer mon profil</button>
-<div class="card"><span id="monAvatar" style="font-size:45px">💜</span><h3 id="monPseudo">Membre GammeClub</h3></div>
-<p class="small">Le profil est enregistré sur cet appareil. La connexion réelle sera ajoutée ultérieurement.</p>
-</section>
-
-<section id="messages">
-<h2>💬 Messages de démonstration</h2>
-<div id="conversation" class="card">💜 Bienvenue sur GammeClub !</div>
-<textarea id="message" placeholder="Écris ton message"></textarea>
-<button onclick="envoyerMessage()">Envoyer</button>
-<p class="small">Les messages restent sur cet appareil : ils ne sont pas transmis aux autres membres.</p>
-</section>
-</main>
+<header>
+<div class="logo">✦ GammeClub 👑</div>
+<div class="slogan">DISCUTE · JOUE · PARTAGE · BRILLE</div>
+<div class="balance">💎 <span id="balance">30 000</span> DIAMANTS</div>
+</header>
 
 <nav>
-<button onclick="aller('accueil')">🏠<br>Accueil</button>
-<button onclick="aller('salles')">🎙️<br>Salles</button>
-<button onclick="aller('jeux')">🎮<br>Jeux</button>
-<button onclick="aller('messages')">💬<br>Messages</button>
-<button onclick="aller('profil')">👤<br>Profil</button>
+<button onclick="info('Accueil')">🏠 Accueil</button>
+<button onclick="info('Salons vocaux')">🎙️ Salons</button>
+<button onclick="info('Jeux')">🎮 Jeux</button>
+<button class="active">🎁 Boutique</button>
+<button onclick="info('Amis')">👥 Amis</button>
 </nav>
+
+<section class="hero">
+<div class="hero-art">🏰 ✨ 🐉</div>
+<h1>CADEAUX LÉGENDAIRES</h1>
+<p>Des cadeaux magiques pour faire briller tes amis !<br>Bienvenue dans la boutique VIP GammeClub.</p>
+</section>
+
+<h2>✨ La boutique VIP</h2>
+<div class="filters">
+<button class="filter active" onclick="filtrer('Tous',this)">🎁 Tous</button>
+<button class="filter" onclick="filtrer('Luxe',this)">👑 Luxe</button>
+<button class="filter" onclick="filtrer('Amour',this)">💗 Amour</button>
+<button class="filter" onclick="filtrer('Animaux',this)">🐉 Animaux</button>
+</div>
+<div class="grid" id="gifts"></div>
+
+<footer>
+<button onclick="info('Accueil')"><span>🏠</span>Accueil</button>
+<button onclick="info('Salons')"><span>🎙️</span>Salons</button>
+<button onclick="info('Jeux')"><span>🎮</span>Jeux</button>
+<button><span>🎁</span>Cadeaux</button>
+<button onclick="info('Messages')"><span>💬</span>Messages</button>
+<button onclick="info('Profil')"><span>👤</span>Profil</button>
+</footer>
 
 <div id="effect">
 <div>
-<h2>🎉 UN CADEAU POUR TOI ! 🎉</h2>
-<div class="emoji" id="effEmoji">🐉</div>
-<h2 id="effNom"></h2>
-<p id="effTexte"></p>
-<button onclick="document.getElementById('effect').style.display='none'">Fermer</button>
+<div class="effect-icon" id="effectIcon">🐉</div>
+<h1 class="effect-title" id="effectTitle">CADEAU LÉGENDAIRE !</h1>
+<p>✨ La magie envahit GammeClub ! ✨</p>
+<button class="close" onclick="document.getElementById('effect').classList.remove('show')">Continuer</button>
 </div>
 </div>
 
 <script>
-function aller(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
-function salon(n){document.getElementById('salonInfo').textContent='Tu as choisi « '+n+' ». Le salon vocal en direct sera activé avec le serveur vocal.';}
-let choisi=document.querySelector('.gift.active');
-document.querySelectorAll('.gift').forEach(g=>g.onclick=()=>{
- document.querySelectorAll('.gift').forEach(x=>x.classList.remove('active'));
- g.classList.add('active');choisi=g;
+const cadeaux=[
+{nom:"Château de glace",icon:"🏰",prix:2500,cat:"Luxe",vip:1},
+{nom:"Dragon légendaire",icon:"🐉",prix:5000,cat:"Luxe",vip:1},
+{nom:"Phénix de feu",icon:"🔥",prix:3000,cat:"Luxe",vip:1},
+{nom:"Yacht royal",icon:"🛥️",prix:4000,cat:"Luxe",vip:1},
+{nom:"Rose éternelle",icon:"🌹",prix:10,cat:"Amour"},
+{nom:"Cœur magique",icon:"💝",prix:50,cat:"Amour"},
+{nom:"Ourson câlin",icon:"🧸",prix:100,cat:"Amour"},
+{nom:"Couronne royale",icon:"👑",prix:1000,cat:"Luxe",vip:1},
+{nom:"Coffre magique",icon:"💎",prix:250,cat:"Luxe"},
+{nom:"Pluie de diamants",icon:"💠",prix:1200,cat:"Luxe",vip:1},
+{nom:"Lion légendaire",icon:"🦁",prix:3500,cat:"Animaux",vip:1},
+{nom:"Loup mystique",icon:"🐺",prix:800,cat:"Animaux"},
+{nom:"Ailes d'ange",icon:"🪽",prix:1500,cat:"Luxe"},
+{nom:"Arbre enchanté",icon:"🌸",prix:900,cat:"Amour"},
+{nom:"Voiture de luxe",icon:"🏎️",prix:2000,cat:"Luxe"},
+{nom:"Univers infini",icon:"🪐",prix:6000,cat:"Luxe",vip:1}
+];
+let solde=30000;
+function afficher(liste){
+const zone=document.getElementById('gifts');
+zone.innerHTML='';
+liste.forEach(c=>{
+const carte=document.createElement('article');
+carte.className='gift'+(c.vip?' vip':'');
+carte.innerHTML=(c.vip?'<div class="tag">✦ VIP ✦</div>':'')+
+'<div class="art">'+c.icon+'</div><h3>'+c.nom+'</h3>'+
+'<div class="price">💎 '+c.prix.toLocaleString('fr-FR')+'</div>'+
+'<button class="send">Envoyer</button>';
+carte.querySelector('.send').onclick=()=>envoyer(c);
+zone.appendChild(carte);
 });
-function cadeau(){
- const dest=document.getElementById('destinataire').value.trim();
- if(!dest){alert('Entre le pseudo du destinataire.');return;}
- document.getElementById('effEmoji').textContent=choisi.dataset.emoji;
- document.getElementById('effNom').textContent=choisi.dataset.nom;
- document.getElementById('effTexte').textContent='Un cadeau pour '+dest+' !';
- document.getElementById('effect').style.display='flex';
 }
-function profil(){
- const p=document.getElementById('pseudo').value.trim()||'Membre GammeClub';
- const a=document.getElementById('avatar').value;
- document.getElementById('monPseudo').textContent=p;
- document.getElementById('monAvatar').textContent=a;
- try{localStorage.setItem('gcProfil',JSON.stringify({p,a}));}catch(e){}
- alert('Profil enregistré sur cet appareil !');
+function filtrer(cat,bouton){
+document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
+bouton.classList.add('active');
+afficher(cat==='Tous'?cadeaux:cadeaux.filter(c=>c.cat===cat));
 }
-try{
- const p=JSON.parse(localStorage.getItem('gcProfil')||'null');
- if(p){document.getElementById('pseudo').value=p.p;document.getElementById('avatar').value=p.a;document.getElementById('monPseudo').textContent=p.p;document.getElementById('monAvatar').textContent=p.a;}
-}catch(e){}
-function envoyerMessage(){
- const champ=document.getElementById('message'),t=champ.value.trim();
- if(!t)return;
- const p=document.createElement('p');p.textContent='👤 Moi : '+t;
- document.getElementById('conversation').appendChild(p);champ.value='';
+function envoyer(c){
+if(solde<c.prix){alert("Pas assez de diamants !");return;}
+solde-=c.prix;
+document.getElementById('balance').textContent=solde.toLocaleString('fr-FR');
+document.getElementById('effectIcon').textContent=c.icon;
+document.getElementById('effectTitle').textContent=c.nom.toUpperCase()+' !';
+document.getElementById('effect').classList.add('show');
 }
-function bingo(){
- const n=Math.floor(Math.random()*75)+1;
- document.getElementById('bingoInfo').textContent='Numéro tiré : '+n;
-}
+function info(nom){alert(nom+' : cette fonction sera ajoutée dans une prochaine version.');}
+afficher(cadeaux);
 </script>
 </body>
 </html>
